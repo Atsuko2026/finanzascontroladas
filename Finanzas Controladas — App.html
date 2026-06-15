@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<!-- saved from url=(0047)file:///C:/Users/lorag/Downloads/app%20(1).html -->
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finanzas Controladas — App</title>
+<link rel="stylesheet" href="./Finanzas Controladas — App_files/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f5;color:#1a1a1a}
+.app{max-width:680px;margin:0 auto;padding:1.5rem 1rem 3rem}
+.tabs{display:flex;gap:3px;margin-bottom:1.5rem;background:#e8e8e8;padding:4px;border-radius:10px;flex-wrap:wrap}
+.tab{flex:1;min-width:42px;padding:7px 2px;font-size:11px;font-weight:500;border:none;background:transparent;color:#666;cursor:pointer;border-radius:6px;transition:all 0.15s;text-align:center}
+.tab.active{background:#fff;color:#1a1a1a;border:0.5px solid #ddd;box-shadow:0 1px 3px rgba(0,0,0,0.08)}
+.screen{display:none}
+.screen.active{display:block}
+.metric-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:1.25rem}
+.metric-grid-4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:1.25rem}
+.metric{background:#f0f0f0;border-radius:10px;padding:11px 13px}
+.metric-label{font-size:11px;color:#999;margin-bottom:3px}
+.metric-value{font-size:19px;font-weight:500;color:#1a1a1a}
+.metric-sub{font-size:11px;color:#999;margin-top:2px}
+.card{background:#fff;border:0.5px solid #e0e0e0;border-radius:14px;padding:1rem 1.25rem;margin-bottom:1rem}
+.card-title{font-size:11px;font-weight:500;color:#999;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px}
+.slider-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.slider-label{font-size:13px;color:#555;min-width:115px}
+.slider-row input[type=range]{flex:1}
+.slider-val{font-size:13px;font-weight:500;min-width:46px;text-align:right;color:#1a1a1a}
+.tier-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:1rem}
+.tier{border:0.5px solid #e0e0e0;border-radius:10px;padding:11px;cursor:pointer;transition:border 0.15s;background:#fff}
+.tier.selected{border:2px solid #185FA5}
+.tier-name{font-size:11px;color:#999;margin-bottom:3px}
+.tier-price{font-size:17px;font-weight:500;color:#1a1a1a}
+.tier-desc{font-size:11px;color:#999;margin-top:3px}
+.progress-bar{background:#e8e8e8;border-radius:4px;height:6px;margin:5px 0 2px;overflow:hidden}
+.progress-fill{height:100%;border-radius:4px;transition:width 0.4s}
+.badge{font-size:11px;padding:2px 7px;border-radius:8px;font-weight:500}
+.pos{background:#EAF3DE;color:#3B6D11}
+.neg{background:#FCEBEB;color:#A32D2D}
+.neu{background:#e8e8e8;color:#555}
+.waterfall{display:flex;flex-direction:column;gap:6px}
+.wf-row{display:flex;align-items:center;gap:10px}
+.wf-label{font-size:13px;color:#555;min-width:100px}
+.wf-bar-wrap{flex:1;background:#e8e8e8;border-radius:4px;height:18px;overflow:hidden}
+.wf-bar{height:100%;border-radius:4px;transition:width 0.4s}
+.wf-amount{font-size:13px;font-weight:500;min-width:64px;text-align:right}
+.action-btn{width:100%;padding:9px;font-size:13px;cursor:pointer;border-radius:10px;border:0.5px solid #ddd;background:transparent;color:#1a1a1a;margin-top:6px}
+.action-btn:hover{background:#f5f5f5}
+.checklist{list-style:none}
+.checklist li{display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:0.5px solid #f0f0f0;font-size:13px}
+.checklist li:last-child{border-bottom:none}
+.month-table{width:100%;border-collapse:collapse;font-size:12px}
+.month-table th{font-size:10px;color:#999;font-weight:500;text-align:left;padding:3px 5px 7px;border-bottom:0.5px solid #f0f0f0}
+.month-table td{padding:6px 5px;border-bottom:0.5px solid #f0f0f0;color:#1a1a1a}
+.month-table tr:last-child td{border-bottom:none}
+.mini-bar{height:4px;border-radius:3px;background:#e8e8e8;margin-top:3px}
+.mini-fill{height:100%;border-radius:3px}
+.milestone{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:0.5px solid #f0f0f0}
+.milestone:last-child{border-bottom:none}
+.ms-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.input-row{display:flex;gap:8px;margin-bottom:10px;align-items:center}
+.input-row label{font-size:13px;color:#555;min-width:110px}
+.input-row input[type=number]{width:80px;padding:5px 8px;font-size:13px;border:0.5px solid #ddd;border-radius:8px;background:#fff;color:#1a1a1a}
+.zero-tag{display:inline-block;font-size:10px;padding:1px 6px;border-radius:8px;background:#E6F1FB;color:#185FA5;font-weight:500;margin-left:6px;vertical-align:middle}
+.paso{border:0.5px solid #e0e0e0;border-radius:12px;margin-bottom:8px;overflow:hidden;background:#fff}
+.paso-header{display:flex;align-items:center;gap:12px;padding:12px 14px;cursor:pointer}
+.paso-num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;flex-shrink:0}
+.paso-title{font-size:14px;font-weight:500;color:#1a1a1a;flex:1}
+.paso-body{padding:0 14px 14px 52px;display:none}
+.paso-body.open{display:block}
+.paso-body p{font-size:13px;color:#555;line-height:1.6;margin-bottom:8px}
+.paso-variante{background:#f5f5f5;border-radius:8px;padding:10px 12px;margin-top:8px}
+.paso-variante-label{font-size:10px;font-weight:500;color:#999;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px}
+.paso-variante p{font-size:12px;color:#555;margin:0}
+.paso-check{width:18px;height:18px;border-radius:50%;border:1.5px solid #ddd;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all 0.15s}
+.paso-check.done{background:#1D9E75;border-color:#1D9E75}
+.progress-steps{display:flex;align-items:center;gap:6px;margin-bottom:1.25rem}
+.step-dot{width:8px;height:8px;border-radius:50%;background:#e8e8e8;transition:background 0.2s;flex-shrink:0}
+.step-dot.done{background:#1D9E75}
+.step-dot.active{background:#185FA5}
+.step-line{flex:1;height:2px;background:#e8e8e8;border-radius:2px}
+.step-line.done{background:#1D9E75}
+.plan-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:1rem}
+.perfil-selector{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:1.25rem}
+.perfil-btn{padding:10px 6px;border:0.5px solid #e0e0e0;border-radius:10px;background:transparent;cursor:pointer;font-size:12px;font-weight:500;color:#555;text-align:center;transition:all 0.15s}
+.perfil-btn.active{border:2px solid #185FA5;color:#185FA5;background:#E6F1FB44}
+.perfil-icon{font-size:18px;display:block;margin-bottom:4px}
+.cat-tabs{display:flex;gap:4px;margin-bottom:1rem;flex-wrap:wrap}
+.cat-tab{padding:5px 12px;font-size:12px;font-weight:500;border:0.5px solid #e0e0e0;border-radius:8px;background:transparent;color:#555;cursor:pointer;transition:all 0.15s}
+.cat-tab.active{background:#185FA5;color:white;border-color:#185FA5}
+.add-form{display:grid;grid-template-columns:1fr 1fr auto auto;gap:8px;align-items:end;margin-bottom:1rem}
+.add-form input,.add-form select{padding:7px 10px;font-size:13px;border:0.5px solid #ddd;border-radius:8px;background:#fff;color:#1a1a1a;width:100%}
+.add-btn{padding:7px 14px;font-size:13px;font-weight:500;border:none;border-radius:8px;background:#185FA5;color:white;cursor:pointer;white-space:nowrap}
+.add-btn:hover{background:#0C447C}
+.del-btn{background:none;border:none;color:#999;cursor:pointer;font-size:14px;padding:2px 6px;border-radius:4px}
+.del-btn:hover{color:#A32D2D;background:#FCEBEB}
+.movs-table{width:100%;border-collapse:collapse;font-size:13px}
+.movs-table th{font-size:10px;color:#999;font-weight:500;text-align:left;padding:3px 6px 8px;border-bottom:0.5px solid #f0f0f0}
+.movs-table td{padding:7px 6px;border-bottom:0.5px solid #f0f0f0;color:#1a1a1a;vertical-align:middle}
+.movs-table tr:last-child td{border-bottom:none}
+.cat-pill{font-size:10px;padding:2px 7px;border-radius:10px;font-weight:500}
+.balance-bar{display:flex;height:8px;border-radius:4px;overflow:hidden;margin:8px 0 4px}
+.balance-seg{height:100%;transition:width 0.4s}
+.empty-state{text-align:center;padding:2rem 0;color:#999;font-size:13px}
+.resumen-cats{display:flex;flex-direction:column;gap:8px}
+.cat-row{display:flex;align-items:center;gap:10px}
+.cat-label-sm{font-size:13px;color:#555;min-width:110px}
+.cat-bar-wrap{flex:1;background:#e8e8e8;border-radius:4px;height:16px;overflow:hidden}
+.cat-bar-fill{height:100%;border-radius:4px;transition:width 0.4s}
+.cat-amount{font-size:12px;font-weight:500;min-width:56px;text-align:right}
+.ctrl-score{display:flex;flex-direction:column;align-items:center;padding:1.5rem 0 1rem}
+.score-ring{position:relative;width:120px;height:120px;margin-bottom:12px}
+.score-ring svg{transform:rotate(-90deg)}
+.score-num{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.score-num span{font-size:28px;font-weight:500;display:block}
+.score-num small{font-size:11px;color:#999}
+.ctrl-label{font-size:15px;font-weight:500;color:#1a1a1a;margin-bottom:4px}
+.ctrl-sub{font-size:12px;color:#555;text-align:center;max-width:320px}
+.indicador{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:0.5px solid #f0f0f0}
+.indicador:last-child{border-bottom:none}
+.ind-icon{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.ind-content{flex:1}
+.ind-label{font-size:13px;font-weight:500;color:#1a1a1a;margin-bottom:2px}
+.ind-desc{font-size:11px;color:#555}
+.ind-val{font-size:14px;font-weight:500;text-align:right;min-width:48px}
+.ind-bar{height:4px;background:#e8e8e8;border-radius:2px;margin-top:4px;overflow:hidden}
+.ind-bar-fill{height:100%;border-radius:2px;transition:width 0.5s}
+.alerta{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:10px;margin-bottom:8px}
+.alerta:last-child{margin-bottom:0}
+.alerta-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.alerta-text{font-size:13px;line-height:1.5}
+.edu-modulos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:1.25rem}
+.edu-mod{border:0.5px solid #e0e0e0;border-radius:12px;padding:12px;cursor:pointer;transition:border 0.15s;background:#fff}
+.edu-mod.active{border:2px solid #185FA5}
+.edu-mod-num{font-size:10px;font-weight:500;color:#999;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.04em}
+.edu-mod-title{font-size:13px;font-weight:500;color:#1a1a1a;margin-bottom:4px}
+.edu-mod-lecciones{font-size:11px;color:#999}
+.edu-mod-bar{height:3px;border-radius:2px;background:#e8e8e8;margin-top:8px;overflow:hidden}
+.edu-mod-fill{height:100%;border-radius:2px}
+.leccion{border:0.5px solid #e0e0e0;border-radius:10px;margin-bottom:8px;overflow:hidden;background:#fff}
+.leccion-header{display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer}
+.lec-num{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0}
+.lec-title{font-size:13px;font-weight:500;color:#1a1a1a;flex:1}
+.lec-dur{font-size:11px;color:#999;margin-right:8px}
+.lec-check{width:17px;height:17px;border-radius:50%;border:1.5px solid #ddd;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all 0.15s}
+.lec-check.done{background:#1D9E75;border-color:#1D9E75}
+.leccion-body{padding:0 14px 14px 46px;display:none;font-size:13px;color:#555;line-height:1.7}
+.leccion-body.open{display:block}
+.concepto{background:#f5f5f5;border-radius:8px;padding:10px 12px;margin:10px 0}
+.concepto-label{font-size:10px;font-weight:500;color:#999;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:4px}
+.concepto p{font-size:12px;color:#555;margin:0}
+.edu-prog{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:1rem}
+.glosario-item{padding:10px 0;border-bottom:0.5px solid #f0f0f0}
+.glosario-item:last-child{border-bottom:none}
+.glosario-term{font-size:13px;font-weight:500;color:#1a1a1a;margin-bottom:3px}
+.glosario-def{font-size:12px;color:#555;line-height:1.5}
+.edu-subtabs{display:flex;gap:4px;margin-bottom:1rem}
+.edu-subtab{padding:5px 12px;font-size:12px;font-weight:500;border:0.5px solid #e0e0e0;border-radius:8px;background:transparent;color:#555;cursor:pointer;transition:all 0.15s}
+.edu-subtab.active{background:#185FA5;color:white;border-color:#185FA5}
+.lunes-entrada{display:flex;gap:8px;align-items:flex-end;margin-bottom:1rem}
+.lunes-entrada input[type=number]{flex:1;padding:10px 12px;font-size:16px;font-weight:500;border:0.5px solid #ddd;border-radius:8px;background:#fff;color:#1a1a1a}
+.lunes-btn{padding:10px 16px;font-size:13px;font-weight:500;border:none;border-radius:8px;background:#185FA5;color:white;cursor:pointer}
+.lunes-btn:hover{background:#0C447C}
+.semana-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:0.5px solid #f0f0f0}
+.semana-row:last-child{border-bottom:none}
+.semana-label{font-size:12px;color:#999;min-width:60px}
+.semana-val{font-size:14px;font-weight:500;min-width:64px}
+.semana-delta{font-size:11px;min-width:52px}
+.semana-bar-wrap{flex:1;background:#e8e8e8;border-radius:3px;height:8px;overflow:hidden}
+.semana-bar-fill{height:100%;border-radius:3px}
+.lunes-big{text-align:center;padding:1rem 0 0.5rem}
+.lunes-mrr{font-size:36px;font-weight:500}
+.lunes-racha{font-size:12px;color:#999;margin-top:6px}
+.gasto-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.gasto-row input[type=text]{flex:1;padding:6px 10px;font-size:13px;border:0.5px solid #ddd;border-radius:8px;background:#fff;color:#1a1a1a}
+.gasto-row input[type=number]{width:90px;padding:6px 10px;font-size:13px;border:0.5px solid #ddd;border-radius:8px;background:#fff;color:#1a1a1a}
+.gasto-add{padding:6px 12px;font-size:12px;font-weight:500;border:none;border-radius:8px;background:#185FA5;color:white;cursor:pointer}
+.gasto-del{background:none;border:none;color:#999;cursor:pointer;font-size:14px;padding:2px 5px}
+.libertad-hero{text-align:center;padding:1rem 0}
+.libertad-mes{font-size:48px;font-weight:500;color:#1D9E75;line-height:1;margin-bottom:6px}
+.libertad-label{font-size:14px;color:#555;margin-bottom:4px}
+.libertad-mrr-needed{font-size:13px;color:#999}
+.libertad-timeline{display:flex;flex-direction:column;gap:6px}
+.tl-row{display:flex;align-items:center;gap:10px}
+.tl-mes{font-size:11px;color:#999;min-width:38px}
+.tl-bar-wrap{flex:1;background:#e8e8e8;border-radius:3px;height:14px;overflow:hidden;position:relative}
+.tl-bar-mrr{height:100%;border-radius:3px;transition:width 0.4s}
+.tl-bar-meta{position:absolute;top:0;height:100%;width:2px;background:#E24B4A}
+.tl-val{font-size:11px;font-weight:500;min-width:50px;text-align:right}
+.tl-check{font-size:12px;min-width:16px}
+.ia-card{border:0.5px solid #185FA5;border-radius:14px;padding:1rem 1.25rem;margin-bottom:1rem;background:#E6F1FB22}
+.ia-card-title{font-size:11px;font-weight:500;color:#185FA5;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.ia-btn{display:flex;align-items:center;gap:8px;width:100%;padding:10px 14px;font-size:13px;font-weight:500;cursor:pointer;border-radius:8px;border:1.5px solid #185FA5;background:#185FA5;color:white;transition:all 0.15s;justify-content:center}
+.ia-btn:hover{background:#0C447C;border-color:#0C447C}
+.ia-btn:disabled{opacity:0.6;cursor:not-allowed}
+.ia-resultado{margin-top:12px}
+.ia-texto{font-size:14px;color:#1a1a1a;line-height:1.6;font-weight:500;padding:12px 14px;background:#f5f5f5;border-radius:8px;border-left:3px solid #185FA5}
+.ia-loading{display:flex;align-items:center;gap:8px;font-size:13px;color:#999;padding:8px 0}
+.ia-dot{width:6px;height:6px;border-radius:50%;background:#185FA5;animation:pulse 1.2s infinite}
+.ia-dot:nth-child(2){animation-delay:0.2s}
+.ia-dot:nth-child(3){animation-delay:0.4s}
+.ia-contexto{font-size:11px;color:#999;margin-top:8px;line-height:1.5}
+@keyframes pulse{0%,80%,100%{opacity:0.2;transform:scale(0.8)}40%{opacity:1;transform:scale(1)}}
+</style>
+</head>
+<body>
+<div class="app">
+<h1 style="font-size:16px;font-weight:600;color:#185FA5;text-align:center;margin-bottom:1.25rem;letter-spacing:0.02em;">FINANZAS CONTROLADAS</h1>
+
+<div class="tabs">
+  <button class="tab active" onclick="switchTab(&#39;dashboard&#39;,this)">Panel</button>
+  <button class="tab" onclick="switchTab(&#39;lunes&#39;,this)">Lunes</button>
+  <button class="tab" onclick="switchTab(&#39;control-fin&#39;,this)">Control</button>
+  <button class="tab" onclick="switchTab(&#39;registro&#39;,this)">Registro</button>
+  <button class="tab" onclick="switchTab(&#39;plan&#39;,this)">Plan</button>
+  <button class="tab" onclick="switchTab(&#39;edu&#39;,this)">Aprende</button>
+  <button class="tab" onclick="switchTab(&#39;calc&#39;,this)">MRR</button>
+  <button class="tab" onclick="switchTab(&#39;tracker&#39;,this)">Tracker</button>
+  <button class="tab" onclick="switchTab(&#39;checklist&#39;,this)">Check</button>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard" class="screen active">
+  <div class="ia-card">
+    <div class="ia-card-title">✨ Tu acción de hoy</div>
+    <button class="ia-btn" id="ia-btn" onclick="generarRecomendacion()">✨ ¿Qué debo hacer hoy?</button>
+    <div class="ia-resultado" id="ia-resultado"></div>
+  </div>
+  <div class="metric-grid">
+    <div class="metric"><div class="metric-label">Suscriptores activos</div><div class="metric-value">2,500 <span class="zero-tag">cero</span></div><div class="metric-sub">base de partida</div></div>
+    <div class="metric"><div class="metric-label">MRR proyectado</div><div class="metric-value" id="d-mrr">$117.5k</div><div class="metric-sub">negocio</div></div>
+    <div class="metric"><div class="metric-label">MRR real (último lunes)</div><div class="metric-value" id="d-mrr-real">—</div><div class="metric-sub" id="d-mrr-real-sub">sin registros</div></div>
+  </div>
+  <div class="metric-grid">
+    <div class="metric"><div class="metric-label">Ingresos registrados</div><div class="metric-value" id="d-ingresos" style="color:#1D9E75;">$0</div><div class="metric-sub">este mes</div></div>
+    <div class="metric"><div class="metric-label">Nivel de control</div><div class="metric-value" id="d-ctrl-score" style="color: rgb(153, 153, 153);">0/100</div><div class="metric-sub" id="d-ctrl-label">sin datos registrados</div></div>
+    <div class="metric"><div class="metric-label">Control total en</div><div class="metric-value" id="d-mes-libertad" style="color:#1D9E75;">Ya</div><div class="metric-sub" id="d-libertad-sub">control total activado</div></div>
+  </div>
+  <div class="metric-grid">
+    <div class="metric"><div class="metric-label">Semanas registradas</div><div class="metric-value" id="d-semanas">0</div><div class="metric-sub">historial MRR</div></div>
+    <div class="metric"><div class="metric-label">Racha de crecimiento</div><div class="metric-value" id="d-racha">0</div><div class="metric-sub">lunes consecutivos</div></div>
+    <div class="metric"><div class="metric-label">Tendencia MRR</div><div class="metric-value" id="d-tendencia">—</div><div class="metric-sub">vs semana anterior</div></div>
+  </div>
+  <div class="card"><div class="card-title">Balance ingresos vs gastos</div>
+    <div class="balance-bar" id="d-balance-bar"><div class="balance-seg" style="width:50%;background:#1D9E75;"></div><div class="balance-seg" style="width:50%;background:#E24B4A;"></div></div>
+    <div style="display:flex;justify-content:space-between;font-size:11px;color:#999;margin-top:4px;"><span id="d-pct-ing">Ingresos 50%</span><span id="d-pct-gas">Gastos 50%</span></div>
+  </div>
+  <div class="card"><div class="card-title">Flujo financiero del negocio</div><div class="waterfall" id="d-waterfall"><div class="wf-row"><span class="wf-label">MRR bruto</span><div class="wf-bar-wrap"><div class="wf-bar" style="width:100%;background:#1D9E75;"></div></div><span class="wf-amount" style="color:#1D9E75;">$117.5k</span></div><div class="wf-row"><span class="wf-label">Costos</span><div class="wf-bar-wrap"><div class="wf-bar" style="width:40%;background:#E24B4A;"></div></div><span class="wf-amount" style="color:#A32D2D;">−$47.0k</span></div><div class="wf-row"><span class="wf-label">Ganancia neta</span><div class="wf-bar-wrap"><div class="wf-bar" style="width:60%;background:#185FA5;"></div></div><span class="wf-amount" style="color:#185FA5;">$70.5k</span></div></div></div>
+</div>
+
+<!-- LUNES -->
+<div id="lunes" class="screen">
+  <div class="card">
+    <div class="card-title">📅 Registro del lunes</div>
+    <div style="font-size:12px;color:#555;margin-bottom:14px;">Cada lunes anota tu MRR real. Un número, un minuto, un hábito que mantiene tus finanzas controladas.</div>
+    <div class="lunes-entrada">
+      <input type="number" id="lunes-input" placeholder="MRR real esta semana ($)" min="0" step="1">
+      <button class="lunes-btn" onclick="registrarLunes()">✓ Registrar</button>
+    </div>
+    <div id="lunes-estado"><div class="empty-state" style="padding:1rem 0;">📅 Registra tu MRR real de esta semana</div></div>
+  </div>
+  <div id="lunes-historial-card" style="display:none;">
+    <div class="card">
+      <div class="card-title">MRR real — últimas semanas</div>
+      <div class="lunes-big"><div class="lunes-mrr" id="lunes-ultimo">—</div><div id="lunes-delta-badge" style="margin-top:6px;"></div><div class="lunes-racha" id="lunes-racha-txt"></div></div>
+      <canvas id="lunes-chart" height="110" style="margin-top:1rem;"></canvas>
+    </div>
+    <div class="card"><div class="card-title">Historial semanal</div><div id="lunes-lista"></div></div>
+    <div class="card"><div class="card-title">MRR real vs proyectado</div><div id="lunes-vs-proj"></div></div>
+  </div>
+</div>
+
+<!-- CONTROL FINANCIERO -->
+<div id="control-fin" class="screen">
+  <div class="card"><div class="card-title">Nivel de control financiero</div>
+    <div class="ctrl-score">
+      <div class="score-ring">
+        <svg width="120" height="120" viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="50" fill="none" stroke-width="10" style="stroke:#e8e8e8;"></circle>
+          <circle id="ctrl-arc" cx="60" cy="60" r="50" fill="none" stroke-width="10" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="314" style="transition: stroke-dashoffset 0.8s; stroke: rgb(136, 136, 136); stroke-dashoffset: 314;"></circle>
+        </svg>
+        <div class="score-num"><span id="ctrl-num" style="color: rgb(136, 136, 136);">0</span><small>/ 100</small></div>
+      </div>
+      <div class="ctrl-label" id="ctrl-estado" style="color: rgb(136, 136, 136);">Sin datos registrados</div>
+      <div class="ctrl-sub" id="ctrl-consejo">Registra ingresos y gastos en el tab Registro para activar tu diagnóstico.</div>
+    </div>
+  </div>
+  <div class="card"><div class="card-title">Los 5 indicadores de control</div><div id="indicadores-lista"><div class="empty-state">Registra movimientos para activar los indicadores de control</div></div></div>
+  <div class="card"><div class="card-title">Alertas de control</div><div id="alertas-lista"></div></div>
+  <div class="card"><div class="card-title">Cumplimiento por indicador</div><canvas id="ctrl-chart" height="0" style="display: block; box-sizing: border-box; height: 0px; width: 0px;" width="0"></canvas></div>
+</div>
+
+<!-- REGISTRO -->
+<div id="registro" class="screen">
+  <div class="cat-tabs">
+    <button class="cat-tab active" onclick="setControlTab(&#39;todos&#39;,this)">Todos</button>
+    <button class="cat-tab" onclick="setControlTab(&#39;ingresos&#39;,this)">Ingresos</button>
+    <button class="cat-tab" onclick="setControlTab(&#39;gastos&#39;,this)">Gastos</button>
+    <button class="cat-tab" onclick="setControlTab(&#39;resumen&#39;,this)">Resumen</button>
+  </div>
+  <div class="card"><div class="card-title">Registrar movimiento</div>
+    <div class="add-form">
+      <input type="text" id="mov-desc" placeholder="Descripción">
+      <input type="number" id="mov-monto" placeholder="Monto $" min="0" step="0.01">
+      <select id="mov-cat"><optgroup label="Ingresos"><option value="salario">Salario</option><option value="mrr">MRR / suscripciones</option><option value="freelance">Freelance</option><option value="ventas">Ventas</option><option value="otro-ing">Otro ingreso</option></optgroup><optgroup label="Gastos"><option value="vivienda">Vivienda / renta</option><option value="comida">Comida</option><option value="transporte">Transporte</option><option value="herramientas">Herramientas</option><option value="marketing">Marketing</option><option value="personal">Personal</option><option value="ahorro">Ahorro</option><option value="otro-gas">Otro gasto</option></optgroup></select>
+      <button class="add-btn" onclick="addMovimiento()">+ Agregar</button>
+    </div>
+  </div>
+  <div id="control-todos"><div class="card"><div class="card-title">Movimientos del mes</div><div id="mov-lista"><div class="empty-state">📥 Sin movimientos aún</div></div></div></div>
+  <div id="control-resumen" style="display:none;">
+    <div class="metric-grid">
+      <div class="metric"><div class="metric-label">Total ingresos</div><div class="metric-value" id="r-ing" style="color:#1D9E75;">$0</div></div>
+      <div class="metric"><div class="metric-label">Total gastos</div><div class="metric-value" id="r-gas" style="color:#A32D2D;">$0</div></div>
+      <div class="metric"><div class="metric-label">Balance</div><div class="metric-value" id="r-bal" style="color: rgb(29, 158, 117);">$0</div></div>
+    </div>
+    <div class="card"><div class="card-title">Gastos por categoría</div><div class="resumen-cats" id="resumen-cats"><div class="empty-state">Sin gastos aún</div></div></div>
+    <div class="card"><div class="card-title">Regla 50/30/20</div><div id="regla-5030"><div class="empty-state">Registra ingresos para activar</div></div></div>
+  </div>
+</div>
+
+<!-- PLAN -->
+<div id="plan" class="screen">
+  <div class="card" style="margin-bottom:1rem;"><div class="card-title">¿Cuál es tu perfil?</div>
+    <div class="perfil-selector">
+      <button class="perfil-btn active" onclick="setPerfil(&#39;empleado&#39;,this)"><span class="perfil-icon">💼</span>Empleado</button>
+      <button class="perfil-btn" onclick="setPerfil(&#39;freelancer&#39;,this)"><span class="perfil-icon">💻</span>Freelancer</button>
+      <button class="perfil-btn" onclick="setPerfil(&#39;dueno&#39;,this)"><span class="perfil-icon">🏪</span>Dueño de negocio</button>
+    </div>
+  </div>
+  <div class="plan-summary">
+    <div class="metric"><div class="metric-label">Pasos totales</div><div class="metric-value">8</div></div>
+    <div class="metric"><div class="metric-label">Completados</div><div class="metric-value" id="p-done">0</div></div>
+    <div class="metric"><div class="metric-label">Progreso</div><div class="metric-value" id="p-pct">0%</div></div>
+  </div>
+  <div class="progress-steps" id="progress-steps"><div class="step-dot active"></div><div class="step-line "></div><div class="step-dot "></div><div class="step-line "></div><div class="step-dot "></div><div class="step-line "></div><div class="step-dot "></div><div class="step-line "></div><div class="step-dot "></div><div class="step-line "></div><div class="step-dot "></div><div class="step-line "></div><div class="step-dot "></div><div class="step-line "></div><div class="step-dot "></div></div>
+  <div id="pasos-container"><div class="paso" style=""><div class="paso-header" onclick="togglePaso(1)"><div class="paso-num" style="background:#1D9E7522;color:#1D9E75;">1</div><div style="flex:1;"><div class="paso-title" style="">Diagnóstico financiero</div></div><span style="font-size:11px;color:#999;margin-right:8px;">Semana 1</span><div class="paso-check " onclick="toggleCheck(1,event)"></div></div><div class="paso-body" id="paso-body-1"><p>Suma ingresos y gastos. La diferencia es tu margen de control real.</p><div class="paso-variante"><div class="paso-variante-label">Si eres empleado</div><p>Incluye salario neto y cualquier ingreso extra.</p></div></div></div><div class="paso" style=""><div class="paso-header" onclick="togglePaso(2)"><div class="paso-num" style="background:#1D9E7522;color:#1D9E75;">2</div><div style="flex:1;"><div class="paso-title" style="">Define tus 3 números de control</div></div><span style="font-size:11px;color:#999;margin-right:8px;">Semana 1</span><div class="paso-check " onclick="toggleCheck(2,event)"></div></div><div class="paso-body" id="paso-body-2"><p>Cuánto necesitas, cuánto ahorrar, cuánto reinvertir.</p><div class="paso-variante"><div class="paso-variante-label">Si eres empleado</div><p>20% de ahorro antes de gastos discrecionales.</p></div></div></div><div class="paso" style=""><div class="paso-header" onclick="togglePaso(3)"><div class="paso-num" style="background:#185FA522;color:#185FA5;">3</div><div style="flex:1;"><div class="paso-title" style="">Elimina gastos fuera de control</div></div><span style="font-size:11px;color:#999;margin-right:8px;">Semana 2</span><div class="paso-check " onclick="toggleCheck(3,event)"></div></div><div class="paso-body" id="paso-body-3"><p>Genera dinero, bienestar, o no sirve. Elimina el tercero.</p><div class="paso-variante"><div class="paso-variante-label">Si eres empleado</div><p>Suscripciones duplicadas y membresías sin uso.</p></div></div></div><div class="paso" style=""><div class="paso-header" onclick="togglePaso(4)"><div class="paso-num" style="background:#185FA522;color:#185FA5;">4</div><div style="flex:1;"><div class="paso-title" style="">Activa tu primer ingreso recurrente</div></div><span style="font-size:11px;color:#999;margin-right:8px;">Semana 2</span><div class="paso-check " onclick="toggleCheck(4,event)"></div></div><div class="paso-body" id="paso-body-4"><p>Una habilidad que otros necesiten mensualmente.</p><div class="paso-variante"><div class="paso-variante-label">Si eres empleado</div><p>Tu conocimiento profesional vale fuera de tu empresa.</p></div></div></div><div class="paso" style=""><div class="paso-header" onclick="togglePaso(5)"><div class="paso-num" style="background:#BA751722;color:#BA7517;">5</div><div style="flex:1;"><div class="paso-title" style="">Estructura los 3 tiers de control</div></div><span style="font-size:11px;color:#999;margin-right:8px;">Semana 3</span><div class="paso-check " onclick="toggleCheck(5,event)"></div></div><div class="paso-body" id="paso-body-5"><p>Básico, Pro y Elite desde el día uno.</p><div class="paso-variante"><div class="paso-variante-label">Si eres empleado</div><p>Empieza con básico para validar.</p></div></div></div><div class="paso" style=""><div class="paso-header" onclick="togglePaso(6)"><div class="paso-num" style="background:#BA751722;color:#BA7517;">6</div><div style="flex:1;"><div class="paso-title" style="">Automatiza el cobro</div></div><span style="font-size:11px;color:#999;margin-right:8px;">Semana 3</span><div class="paso-check " onclick="toggleCheck(6,event)"></div></div><div class="paso-body" id="paso-body-6"><p>El dinero llega sin que hagas nada.</p><div class="paso-variante"><div class="paso-variante-label">Si eres empleado</div><p>Stripe, Hotmart o Gumroad.</p></div></div></div><div class="paso" style=""><div class="paso-header" onclick="togglePaso(7)"><div class="paso-num" style="background:#99355622;color:#993556;">7</div><div style="flex:1;"><div class="paso-title" style="">Registra el MRR cada lunes</div></div><span style="font-size:11px;color:#999;margin-right:8px;">Semana 4</span><div class="paso-check " onclick="toggleCheck(7,event)"></div></div><div class="paso-body" id="paso-body-7"><p>Un número real, cada semana. Tab Lunes en esta app.</p><div class="paso-variante"><div class="paso-variante-label">Si eres empleado</div><p>Tu MRR debe superar el 30% del ingreso.</p></div></div></div><div class="paso" style=""><div class="paso-header" onclick="togglePaso(8)"><div class="paso-num" style="background:#99355622;color:#993556;">8</div><div style="flex:1;"><div class="paso-title" style="">Reinvierte el 20% del MRR</div></div><span style="font-size:11px;color:#999;margin-right:8px;">Mes 2+</span><div class="paso-check " onclick="toggleCheck(8,event)"></div></div><div class="paso-body" id="paso-body-8"><p>20% de ganancia neta vuelve como adquisición.</p><div class="paso-variante"><div class="paso-variante-label">Si eres empleado</div><p>Contenido orgánico primero.</p></div></div></div></div>
+</div>
+
+<!-- EDUCATIVO -->
+<div id="edu" class="screen">
+  <div class="edu-subtabs">
+    <button class="edu-subtab active" onclick="setEduTab(&#39;lecciones&#39;,this)">Lecciones</button>
+    <button class="edu-subtab" onclick="setEduTab(&#39;glosario&#39;,this)">Glosario</button>
+  </div>
+  <div id="edu-lecciones">
+    <div class="edu-prog">
+      <div class="metric"><div class="metric-label">Completadas</div><div class="metric-value" id="e-done">0</div></div>
+      <div class="metric"><div class="metric-label">Total</div><div class="metric-value">20</div></div>
+      <div class="metric"><div class="metric-label">Progreso</div><div class="metric-value" id="e-pct">0%</div></div>
+    </div>
+    <div class="edu-modulos" id="edu-modulos"><div class="edu-mod active" onclick="setModulo(0)"><div class="edu-mod-num" style="color:#1D9E75;">Módulo 1</div><div class="edu-mod-title">Fundamentos de control</div><div class="edu-mod-lecciones">0/5 · 0%</div><div class="edu-mod-bar"><div class="edu-mod-fill" style="width:0%;background:#1D9E75;"></div></div></div><div class="edu-mod " onclick="setModulo(1)"><div class="edu-mod-num" style="color:#185FA5;">Módulo 2</div><div class="edu-mod-title">Ingresos recurrentes controlados</div><div class="edu-mod-lecciones">0/5 · 0%</div><div class="edu-mod-bar"><div class="edu-mod-fill" style="width:0%;background:#185FA5;"></div></div></div><div class="edu-mod " onclick="setModulo(2)"><div class="edu-mod-num" style="color:#BA7517;">Módulo 3</div><div class="edu-mod-title">Control de gastos y margen</div><div class="edu-mod-lecciones">0/5 · 0%</div><div class="edu-mod-bar"><div class="edu-mod-fill" style="width:0%;background:#BA7517;"></div></div></div><div class="edu-mod " onclick="setModulo(3)"><div class="edu-mod-num" style="color:#993556;">Módulo 4</div><div class="edu-mod-title">Escala con control</div><div class="edu-mod-lecciones">0/5 · 0%</div><div class="edu-mod-bar"><div class="edu-mod-fill" style="width:0%;background:#993556;"></div></div></div></div>
+    <div id="edu-lecciones-lista"><div class="leccion" style=""><div class="leccion-header" onclick="toggleLeccion(&#39;1-1&#39;)"><div class="lec-num" style="background:#1D9E7522;color:#1D9E75;">1</div><span class="lec-title" style="">¿Qué son las finanzas controladas?</span><span class="lec-dur">3 min</span><div class="lec-check " onclick="toggleLecDone(&#39;1-1&#39;,event)"></div></div><div class="leccion-body" id="lec-body-1-1"><p>Un sistema donde tú decides adónde va cada dólar antes de que llegue.</p><div class="concepto"><div class="concepto-label">Definición</div><p>Finanzas controladas: cada ingreso tiene destino asignado y cada gasto tiene justificación medible.</p></div></div></div><div class="leccion" style=""><div class="leccion-header" onclick="toggleLeccion(&#39;1-2&#39;)"><div class="lec-num" style="background:#1D9E7522;color:#1D9E75;">2</div><span class="lec-title" style="">Ingreso vs riqueza</span><span class="lec-dur">4 min</span><div class="lec-check " onclick="toggleLecDone(&#39;1-2&#39;,event)"></div></div><div class="leccion-body" id="lec-body-1-2"><p>Ganar mucho no es lo mismo que tener control. La riqueza se mide en tiempo de autonomía.</p><div class="concepto"><div class="concepto-label">Fórmula</div><p>Control = Ingresos − Gastos × Tiempo. Sin diferencial positivo no hay control real.</p></div></div></div><div class="leccion" style=""><div class="leccion-header" onclick="toggleLeccion(&#39;1-3&#39;)"><div class="lec-num" style="background:#1D9E7522;color:#1D9E75;">3</div><span class="lec-title" style="">El error de vivir del flujo</span><span class="lec-dur">3 min</span><div class="lec-check " onclick="toggleLecDone(&#39;1-3&#39;,event)"></div></div><div class="leccion-body" id="lec-body-1-3"><p>Cuando gastas todo lo que entra, no tienes control — tienes dependencia del siguiente ingreso.</p><div class="concepto"><div class="concepto-label">Regla</div><p>Paga primero tu sistema. Ahorro e inversión el día 1, no con lo que sobre.</p></div></div></div><div class="leccion" style=""><div class="leccion-header" onclick="toggleLeccion(&#39;1-4&#39;)"><div class="lec-num" style="background:#1D9E7522;color:#1D9E75;">4</div><span class="lec-title" style="">Los 3 pilares del control</span><span class="lec-dur">5 min</span><div class="lec-check " onclick="toggleLecDone(&#39;1-4&#39;,event)"></div></div><div class="leccion-body" id="lec-body-1-4"><p>Escala, margen y recurrencia. Los tres juntos = control financiero total.</p><div class="concepto"><div class="concepto-label">Los 3 pilares</div><p>Escala + Margen + Recurrencia = Control financiero total.</p></div></div></div><div class="leccion" style=""><div class="leccion-header" onclick="toggleLeccion(&#39;1-5&#39;)"><div class="lec-num" style="background:#1D9E7522;color:#1D9E75;">5</div><span class="lec-title" style="">Tu número de control total</span><span class="lec-dur">4 min</span><div class="lec-check " onclick="toggleLecDone(&#39;1-5&#39;,event)"></div></div><div class="leccion-body" id="lec-body-1-5"><p>El MRR mínimo que cubre tus gastos fijos con 30% de colchón.</p><div class="concepto"><div class="concepto-label">Ejercicio</div><p>Gastos fijos + 30% = número de control total. Calcúlalo en el simulador del tab MRR.</p></div></div></div></div>
+  </div>
+  <div id="edu-glosario" style="display:none;"><div class="card"><div class="card-title">Glosario de finanzas controladas</div><div id="glosario-lista"></div></div></div>
+</div>
+
+<!-- MRR + SIMULADOR -->
+<div id="calc" class="screen">
+  <div class="card"><div class="card-title">Tier activo</div>
+    <div class="tier-grid">
+      <div class="tier selected" id="t-basico" onclick="selectTier(&#39;basico&#39;)"><div class="tier-name">Básico</div><div class="tier-price">$47/mo</div><div class="tier-desc">Guía + comunidad</div></div>
+      <div class="tier" id="t-pro" onclick="selectTier(&#39;pro&#39;)"><div class="tier-name">Pro</div><div class="tier-price">$97/mo</div><div class="tier-desc">+ sesiones grupales</div></div>
+      <div class="tier" id="t-elite" onclick="selectTier(&#39;elite&#39;)"><div class="tier-name">Elite</div><div class="tier-price">$197/mo</div><div class="tier-desc">+ 1-a-1 mensual</div></div>
+    </div>
+    <div class="slider-row"><span class="slider-label">Margen operativo</span><input type="range" min="10" max="90" value="60" id="sl-margin" step="1" oninput="syncAll()"><span class="slider-val" id="out-margin">60%</span></div>
+  </div>
+  <div class="metric-grid">
+    <div class="metric"><div class="metric-label">MRR (2,500 subs)</div><div class="metric-value" id="c-mrr">$117.5k</div></div>
+    <div class="metric"><div class="metric-label">Ganancia neta</div><div class="metric-value" id="c-net">$70.5k</div></div>
+    <div class="metric"><div class="metric-label">LTV estimado</div><div class="metric-value" id="c-ltv">$846</div></div>
+  </div>
+  <div class="card"><div class="card-title">Proyección a 12 meses</div><canvas id="calc-chart" height="0" style="display: block; box-sizing: border-box; height: 0px; width: 0px;" width="0"></canvas></div>
+  <div class="card">
+    <div class="card-title">🏁 Simulador — ¿cuándo tengo control total?</div>
+    <div style="font-size:12px;color:#555;margin-bottom:12px;">Ingresa tus gastos fijos. La app calcula en qué mes tu MRR los supera con 30% de colchón.</div>
+    <div id="gastos-lista"><div class="gasto-row"><input type="text" value="Renta / vivienda" style="flex:1;" readonly=""><input type="number" value="800" style="width:90px;" readonly=""><button class="gasto-del" onclick="deleteGasto(1)">✕</button></div><div class="gasto-row"><input type="text" value="Comida" style="flex:1;" readonly=""><input type="number" value="400" style="width:90px;" readonly=""><button class="gasto-del" onclick="deleteGasto(2)">✕</button></div><div class="gasto-row"><input type="text" value="Servicios" style="flex:1;" readonly=""><input type="number" value="150" style="width:90px;" readonly=""><button class="gasto-del" onclick="deleteGasto(3)">✕</button></div><div style="display:flex;justify-content:space-between;font-size:12px;margin-top:6px;padding-top:6px;border-top:0.5px solid #f0f0f0;"><span style="color:#555;">Total gastos fijos</span><span style="font-weight:500;">$1,350/mes</span></div><div style="display:flex;justify-content:space-between;font-size:12px;margin-top:3px;"><span style="color:#555;">Meta de control total</span><span style="font-weight:500;color:#1D9E75;">$1,755/mes</span></div></div>
+    <div class="gasto-row" style="margin-top:8px;">
+      <input type="text" id="g-nombre" placeholder="Nombre del gasto">
+      <input type="number" id="g-monto" placeholder="$ / mes" min="0">
+      <button class="gasto-add" onclick="addGasto()">+</button>
+    </div>
+    <div id="libertad-resultado" style="margin-top:1rem;"><div class="libertad-hero"><div class="libertad-mes">¡Ya!</div><div class="libertad-label">Tu MRR actual cubre tus gastos — tienes control total</div><div class="libertad-mrr-needed">MRR: $117,500 · Meta: $1,755</div></div></div>
+    <div class="card" style="margin-top:1rem;margin-bottom:0;background:#f5f5f5;border:none;">
+      <div class="card-title">Progreso hacia el control total</div>
+      <div class="libertad-timeline" id="libertad-timeline"><div class="tl-row"><span class="tl-mes">Hoy</span><div class="tl-bar-wrap"><div class="tl-bar-mrr" style="width:33%;background:#1D9E75;"></div><div class="tl-bar-meta" style="left:0%;"></div></div><span class="tl-val" style="color:#1D9E75;">$118k</span><span class="tl-check">✓</span></div><div class="tl-row"><span class="tl-mes">M1</span><div class="tl-bar-wrap"><div class="tl-bar-mrr" style="width:37%;background:#1D9E75;"></div><div class="tl-bar-meta" style="left:0%;"></div></div><span class="tl-val" style="color:#1D9E75;">$133k</span><span class="tl-check">✓</span></div><div class="tl-row"><span class="tl-mes">M2</span><div class="tl-bar-wrap"><div class="tl-bar-mrr" style="width:41%;background:#1D9E75;"></div><div class="tl-bar-meta" style="left:0%;"></div></div><span class="tl-val" style="color:#1D9E75;">$149k</span><span class="tl-check">✓</span></div><div class="tl-row"><span class="tl-mes">M3</span><div class="tl-bar-wrap"><div class="tl-bar-mrr" style="width:46%;background:#1D9E75;"></div><div class="tl-bar-meta" style="left:0%;"></div></div><span class="tl-val" style="color:#1D9E75;">$166k</span><span class="tl-check">✓</span></div><div class="tl-row"><span class="tl-mes">M4</span><div class="tl-bar-wrap"><div class="tl-bar-mrr" style="width:51%;background:#1D9E75;"></div><div class="tl-bar-meta" style="left:0%;"></div></div><span class="tl-val" style="color:#1D9E75;">$183k</span><span class="tl-check">✓</span></div><div class="tl-row"><span class="tl-mes">M5</span><div class="tl-bar-wrap"><div class="tl-bar-mrr" style="width:56%;background:#1D9E75;"></div><div class="tl-bar-meta" style="left:0%;"></div></div><span class="tl-val" style="color:#1D9E75;">$202k</span><span class="tl-check">✓</span></div><div class="tl-row"><span class="tl-mes">M6</span><div class="tl-bar-wrap"><div class="tl-bar-mrr" style="width:61%;background:#1D9E75;"></div><div class="tl-bar-meta" style="left:0%;"></div></div><span class="tl-val" style="color:#1D9E75;">$221k</span><span class="tl-check">✓</span></div><div class="tl-row"><span class="tl-mes">M7</span><div class="tl-bar-wrap"><div class="tl-bar-mrr" style="width:67%;background:#1D9E75;"></div><div class="tl-bar-meta" style="left:0%;"></div></div><span class="tl-val" style="color:#1D9E75;">$242k</span><span class="tl-check">✓</span></div><div class="tl-row"><span class="tl-mes">M8</span><div class="tl-bar-wrap"><div class="tl-bar-mrr" style="width:73%;background:#1D9E75;"></div><div class="tl-bar-meta" style="left:0%;"></div></div><span class="tl-val" style="color:#1D9E75;">$263k</span><span class="tl-check">✓</span></div><div class="tl-row"><span class="tl-mes">M9</span><div class="tl-bar-wrap"><div class="tl-bar-mrr" style="width:79%;background:#1D9E75;"></div><div class="tl-bar-meta" style="left:0%;"></div></div><span class="tl-val" style="color:#1D9E75;">$286k</span><span class="tl-check">✓</span></div><div class="tl-row"><span class="tl-mes">M10</span><div class="tl-bar-wrap"><div class="tl-bar-mrr" style="width:86%;background:#1D9E75;"></div><div class="tl-bar-meta" style="left:0%;"></div></div><span class="tl-val" style="color:#1D9E75;">$310k</span><span class="tl-check">✓</span></div><div class="tl-row"><span class="tl-mes">M11</span><div class="tl-bar-wrap"><div class="tl-bar-mrr" style="width:93%;background:#1D9E75;"></div><div class="tl-bar-meta" style="left:0%;"></div></div><span class="tl-val" style="color:#1D9E75;">$334k</span><span class="tl-check">✓</span></div><div class="tl-row"><span class="tl-mes">M12</span><div class="tl-bar-wrap"><div class="tl-bar-mrr" style="width:100%;background:#1D9E75;"></div><div class="tl-bar-meta" style="left:0%;"></div></div><span class="tl-val" style="color:#1D9E75;">$361k</span><span class="tl-check">✓</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TRACKER -->
+<div id="tracker" class="screen">
+  <div class="card"><div class="card-title">Parámetros de crecimiento</div>
+    <div class="slider-row"><span class="slider-label">Crecimiento/mes</span><input type="range" min="0" max="25" value="8" step="1" id="sl-growth" oninput="syncAll()"><span class="slider-val" id="out-growth">8%</span></div>
+    <div class="slider-row"><span class="slider-label">Churn/mes</span><input type="range" min="0" max="15" value="3" step="1" id="sl-churn" oninput="syncAll()"><span class="slider-val" id="out-churn">3%</span></div>
+    <div class="input-row"><label>Nuevos/mes</label><input type="number" id="inp-nuevos" value="200" min="0" oninput="syncAll()"><span style="font-size:12px;color:#999;">adquisición directa</span></div>
+  </div>
+  <div class="metric-grid-4">
+    <div class="metric"><div class="metric-label">Tu cero</div><div class="metric-value">2,500</div><div class="metric-sub" style="color:#185FA5;">base real</div></div>
+    <div class="metric"><div class="metric-label">Mes 3</div><div class="metric-value" id="t-m3">3,524</div><div class="metric-sub" id="t-m3d">+1,024</div></div>
+    <div class="metric"><div class="metric-label">Mes 6</div><div class="metric-value" id="t-m6">4,710</div><div class="metric-sub" id="t-m6d">+2,210</div></div>
+    <div class="metric"><div class="metric-label">Mes 12</div><div class="metric-value" id="t-m12">7,672</div><div class="metric-sub" id="t-m12d">x3.1</div></div>
+  </div>
+  <div class="card"><div class="card-title">Proyección desde 2,500</div>
+    <table class="month-table"><thead><tr><th>Mes</th><th>Suscriptores</th><th>Nuevos</th><th>Bajas</th><th>Neto</th><th>MRR</th><th style="width:55px;">Curva</th></tr></thead><tbody id="t-tabla"><tr><td style="color:#999;">Mes 1</td><td style="font-weight:500;">2,825</td><td style="color:#1D9E75;">+400</td><td style="color:#A32D2D;">−75</td><td><span class="badge pos">+325</span></td><td style="color:#185FA5;">$132.8k</td><td><div class="mini-bar"><div class="mini-fill" style="width:37%;background:#185FA5;"></div></div></td></tr><tr><td style="color:#999;">Mes 2</td><td style="font-weight:500;">3,166</td><td style="color:#1D9E75;">+426</td><td style="color:#A32D2D;">−85</td><td><span class="badge pos">+341</span></td><td style="color:#185FA5;">$148.8k</td><td><div class="mini-bar"><div class="mini-fill" style="width:41%;background:#185FA5;"></div></div></td></tr><tr><td style="color:#999;">Mes 3</td><td style="font-weight:500;">3,524</td><td style="color:#1D9E75;">+453</td><td style="color:#A32D2D;">−95</td><td><span class="badge pos">+358</span></td><td style="color:#185FA5;">$165.6k</td><td><div class="mini-bar"><div class="mini-fill" style="width:46%;background:#185FA5;"></div></div></td></tr><tr><td style="color:#999;">Mes 4</td><td style="font-weight:500;">3,900</td><td style="color:#1D9E75;">+482</td><td style="color:#A32D2D;">−106</td><td><span class="badge pos">+376</span></td><td style="color:#185FA5;">$183.3k</td><td><div class="mini-bar"><div class="mini-fill" style="width:51%;background:#185FA5;"></div></div></td></tr><tr><td style="color:#999;">Mes 5</td><td style="font-weight:500;">4,295</td><td style="color:#1D9E75;">+512</td><td style="color:#A32D2D;">−117</td><td><span class="badge pos">+395</span></td><td style="color:#185FA5;">$201.9k</td><td><div class="mini-bar"><div class="mini-fill" style="width:56%;background:#185FA5;"></div></div></td></tr><tr><td style="color:#999;">Mes 6</td><td style="font-weight:500;">4,710</td><td style="color:#1D9E75;">+544</td><td style="color:#A32D2D;">−129</td><td><span class="badge pos">+415</span></td><td style="color:#185FA5;">$221.4k</td><td><div class="mini-bar"><div class="mini-fill" style="width:61%;background:#185FA5;"></div></div></td></tr><tr><td style="color:#999;">Mes 7</td><td style="font-weight:500;">5,146</td><td style="color:#1D9E75;">+577</td><td style="color:#A32D2D;">−141</td><td><span class="badge pos">+436</span></td><td style="color:#185FA5;">$241.9k</td><td><div class="mini-bar"><div class="mini-fill" style="width:67%;background:#185FA5;"></div></div></td></tr><tr><td style="color:#999;">Mes 8</td><td style="font-weight:500;">5,604</td><td style="color:#1D9E75;">+612</td><td style="color:#A32D2D;">−154</td><td><span class="badge pos">+458</span></td><td style="color:#185FA5;">$263.4k</td><td><div class="mini-bar"><div class="mini-fill" style="width:73%;background:#185FA5;"></div></div></td></tr><tr><td style="color:#999;">Mes 9</td><td style="font-weight:500;">6,084</td><td style="color:#1D9E75;">+648</td><td style="color:#A32D2D;">−168</td><td><span class="badge pos">+480</span></td><td style="color:#185FA5;">$285.9k</td><td><div class="mini-bar"><div class="mini-fill" style="width:79%;background:#185FA5;"></div></div></td></tr><tr><td style="color:#999;">Mes 10</td><td style="font-weight:500;">6,588</td><td style="color:#1D9E75;">+687</td><td style="color:#A32D2D;">−183</td><td><span class="badge pos">+504</span></td><td style="color:#185FA5;">$309.6k</td><td><div class="mini-bar"><div class="mini-fill" style="width:86%;background:#185FA5;"></div></div></td></tr><tr><td style="color:#999;">Mes 11</td><td style="font-weight:500;">7,117</td><td style="color:#1D9E75;">+727</td><td style="color:#A32D2D;">−198</td><td><span class="badge pos">+529</span></td><td style="color:#185FA5;">$334.5k</td><td><div class="mini-bar"><div class="mini-fill" style="width:93%;background:#185FA5;"></div></div></td></tr><tr><td style="color:#999;">Mes 12</td><td style="font-weight:500;">7,672</td><td style="color:#1D9E75;">+769</td><td style="color:#A32D2D;">−214</td><td><span class="badge pos">+555</span></td><td style="color:#185FA5;">$360.6k</td><td><div class="mini-bar"><div class="mini-fill" style="width:100%;background:#185FA5;"></div></div></td></tr></tbody></table>
+  </div>
+  <div class="card"><div class="card-title">Hitos desde tu cero</div><div id="t-hitos"><div class="milestone"><div class="ms-dot" style="background:#1D9E75;"></div><div style="flex:1;"><div style="font-size:13px;font-weight:500;color:#1a1a1a;">3,000 subs <span style="font-size:11px;color:#999;">— +500 desde cero</span></div><div class="progress-bar" style="margin-top:4px;"><div class="progress-fill" style="width:100%;background:#1D9E75;"></div></div></div><span class="badge pos">Mes 2</span></div><div class="milestone"><div class="ms-dot" style="background:#185FA5;"></div><div style="flex:1;"><div style="font-size:13px;font-weight:500;color:#1a1a1a;">5,000 subs <span style="font-size:11px;color:#999;">— x2 tu base</span></div><div class="progress-bar" style="margin-top:4px;"><div class="progress-fill" style="width:100%;background:#185FA5;"></div></div></div><span class="badge pos">Mes 7</span></div><div class="milestone"><div class="ms-dot" style="background:#BA7517;"></div><div style="flex:1;"><div style="font-size:13px;font-weight:500;color:#1a1a1a;">7,500 subs <span style="font-size:11px;color:#999;">— x3 consolidado</span></div><div class="progress-bar" style="margin-top:4px;"><div class="progress-fill" style="width:100%;background:#BA7517;"></div></div></div><span class="badge pos">Mes 12</span></div><div class="milestone"><div class="ms-dot" style="background:#993556;"></div><div style="flex:1;"><div style="font-size:13px;font-weight:500;color:#1a1a1a;">10,000 subs <span style="font-size:11px;color:#999;">— 6 cifras/año</span></div><div class="progress-bar" style="margin-top:4px;"><div class="progress-fill" style="width:77%;background:#993556;"></div></div></div><span class="badge neu">77% mes 12</span></div></div></div>
+  <canvas id="tracker-chart" height="0" style="margin-bottom: 1rem; display: block; box-sizing: border-box; height: 0px; width: 0px;" width="0"></canvas>
+</div>
+
+<!-- CHECKLIST -->
+<div id="checklist" class="screen">
+  <div class="card"><div class="card-title">Fase 1 — Producto y precio</div><ul class="checklist" id="cl-1"><li><span style="color:#1D9E75;font-size:16px;flex-shrink:0;margin-top:1px;">✓</span><span style="margin-left:4px;">Define el nicho y el problema de control que resuelves</span></li><li><span style="color:#1D9E75;font-size:16px;flex-shrink:0;margin-top:1px;">✓</span><span style="margin-left:4px;">Crea la guía de finanzas controladas</span></li><li><span style="color:#1D9E75;font-size:16px;flex-shrink:0;margin-top:1px;">✓</span><span style="margin-left:4px;">Establece los 3 tiers con propuesta de valor</span></li><li><span style="color:#1D9E75;font-size:16px;flex-shrink:0;margin-top:1px;">✓</span><span style="margin-left:4px;">Valida con 5 personas antes de automatizar</span></li><li><span style="color:#1D9E75;font-size:16px;flex-shrink:0;margin-top:1px;">✓</span><span style="margin-left:4px;">Diseña el low ticket de entrada ($9–$27)</span></li></ul></div>
+  <div class="card"><div class="card-title">Fase 2 — Infraestructura recurrente</div><ul class="checklist" id="cl-2"><li><span style="color:#1D9E75;font-size:16px;flex-shrink:0;margin-top:1px;">✓</span><span style="margin-left:4px;">Configura pasarela de cobro recurrente</span></li><li><span style="color:#1D9E75;font-size:16px;flex-shrink:0;margin-top:1px;">✓</span><span style="margin-left:4px;">Crea la secuencia de onboarding automatizada</span></li><li><span style="color:#1D9E75;font-size:16px;flex-shrink:0;margin-top:1px;">✓</span><span style="margin-left:4px;">Construye el área de miembros o canal privado</span></li><li><span style="color:#1D9E75;font-size:16px;flex-shrink:0;margin-top:1px;">✓</span><span style="margin-left:4px;">Programa el ciclo de facturación mensual</span></li><li><span style="color:#1D9E75;font-size:16px;flex-shrink:0;margin-top:1px;">✓</span><span style="margin-left:4px;">Define el proceso de cancelación y retención</span></li></ul></div>
+  <div class="card"><div class="card-title">Fase 3 — Adquisición y escala</div><ul class="checklist" id="cl-3"><li><span style="color:#1D9E75;font-size:16px;flex-shrink:0;margin-top:1px;">✓</span><span style="margin-left:4px;">Crea contenido gratuito que lleve al low ticket</span></li><li><span style="color:#1D9E75;font-size:16px;flex-shrink:0;margin-top:1px;">✓</span><span style="margin-left:4px;">Implementa referidos: descuento por nuevo suscriptor</span></li><li><span style="color:#1D9E75;font-size:16px;flex-shrink:0;margin-top:1px;">✓</span><span style="margin-left:4px;">Mide MRR, churn y LTV cada semana</span></li><li><span style="color:#1D9E75;font-size:16px;flex-shrink:0;margin-top:1px;">✓</span><span style="margin-left:4px;">Activa upsell automático al tier siguiente</span></li><li><span style="color:#1D9E75;font-size:16px;flex-shrink:0;margin-top:1px;">✓</span><span style="margin-left:4px;">Escala el canal que más convierte primero</span></li></ul></div>
+</div>
+</div>
+
+<script src="./Finanzas Controladas — App_files/chart.umd.min.js.download"></script>
+<script>
+const BASE=2500,TIERS={basico:47,pro:97,elite:197};
+let currentTier='basico',calcChart=null,trackerChart=null,ctrlChart=null,lunesChart=null;
+let currentPerfil='empleado',pasosDone=new Set(),currentControlTab='todos';
+let movimientos=[],leccionesDone=new Set(),moduloActivoIdx=0;
+let gastosFijos=[{id:1,nombre:'Renta / vivienda',monto:800},{id:2,nombre:'Comida',monto:400},{id:3,nombre:'Servicios',monto:150}];
+let gastoIdSeq=10,registrosLunes=[];
+
+const NIVELES=[
+  {min:80,label:'Control total',color:'#1D9E75',consejo:'Tus finanzas están completamente bajo control. Momento de escalar.'},
+  {min:55,label:'Control en progreso',color:'#185FA5',consejo:'Tienes las bases. Trabaja los indicadores en rojo para avanzar.'},
+  {min:1,label:'Control bajo',color:'#BA7517',consejo:'Acción inmediata. Empieza por registrar todos tus ingresos y gastos.'},
+  {min:0,label:'Sin datos registrados',color:'#888',consejo:'Registra ingresos y gastos en el tab Registro para activar tu diagnóstico.'},
+];
+
+async function generarRecomendacion(){
+  const btn=document.getElementById('ia-btn'),res=document.getElementById('ia-resultado');
+  btn.disabled=true;btn.innerHTML='⏳ Analizando tu situación...';
+  res.innerHTML=`<div class="ia-loading"><div class="ia-dot"></div><div class="ia-dot"></div><div class="ia-dot"></div><span>Leyendo tus datos de control financiero...</span></div>`;
+  const ctrl=calcControl(),p=getParams(),mrr0=BASE*p.price;
+  const totalIng=movimientos.filter(m=>m.tipo==='ingreso').reduce((s,m)=>s+m.monto,0);
+  const totalGas=movimientos.filter(m=>m.tipo==='gasto').reduce((s,m)=>s+m.monto,0);
+  const mrrReal=registrosLunes.length>0?registrosLunes[registrosLunes.length-1].mrr:null;
+  const mrrAnterior=registrosLunes.length>1?registrosLunes[registrosLunes.length-2].mrr:null;
+  const deltaMRR=mrrReal&&mrrAnterior?mrrReal-mrrAnterior:null;
+  const pasoActual=PASOS.find(p=>!pasosDone.has(p.id));
+  const gastoTotal=gastosFijos.reduce((s,g)=>s+g.monto,0);
+  const metaControl=Math.round(gastoTotal*1.3);
+  const contexto=`Eres el asesor de la Guía de Finanzas Controladas. Analiza estos datos reales del usuario y genera UNA SOLA acción concreta, específica y ejecutable que debería hacer HOY para mejorar su control financiero.\n\nDATOS DEL USUARIO:\n- Nivel de control financiero: ${ctrl.score}/100 (${NIVELES.find(n=>ctrl.score>=n.min).label})\n- MRR proyectado: $${Math.round(mrr0).toLocaleString()}/mes\n- MRR real último lunes: ${mrrReal?'$'+mrrReal.toLocaleString():'No registrado'}\n- Tendencia MRR: ${deltaMRR!==null?(deltaMRR>=0?'+$'+deltaMRR.toLocaleString():'-$'+Math.abs(deltaMRR).toLocaleString()):'Sin historial'}\n- Ingresos registrados: $${Math.round(totalIng).toLocaleString()}\n- Gastos registrados: $${Math.round(totalGas).toLocaleString()}\n- Balance: $${Math.round(totalIng-totalGas).toLocaleString()} (${totalIng-totalGas>=0?'positivo':'NEGATIVO'})\n- Pasos completados: ${pasosDone.size}/8\n- Próximo paso: ${pasoActual?pasoActual.title:'Todos completados'}\n- Lecciones completadas: ${leccionesDone.size}/20\n- Meta de control total: $${metaControl.toLocaleString()}/mes\n- Perfil: ${currentPerfil}\n\nINSTRUCCIONES: Responde ÚNICAMENTE con una acción concreta de máximo 2 oraciones. Sin introducción, sin listas. Empieza directamente con el verbo de acción. Usa lenguaje de Finanzas Controladas.`;
+  try{
+    const response=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,messages:[{role:'user',content:contexto}]})});
+    const data=await response.json();
+    const texto=data.content?.map(b=>b.text||'').join('').trim();
+    if(texto){res.innerHTML=`<div class="ia-texto">${texto}</div><div class="ia-contexto">Basado en: nivel ${ctrl.score}/100 · ${pasosDone.size}/8 pasos · ${registrosLunes.length} semanas registradas</div>`;}
+    else{res.innerHTML=`<div class="ia-texto">Registra al menos un movimiento en Registro para recibir tu recomendación personalizada.</div>`;}
+  }catch(e){res.innerHTML=`<div class="ia-texto">Registra tus primeros movimientos en Registro y vuelve a intentarlo.</div>`;}
+  btn.disabled=false;btn.innerHTML='🔄 Actualizar recomendación';
+}
+
+function calcControl(){
+  const ing=movimientos.filter(m=>m.tipo==='ingreso').reduce((s,m)=>s+m.monto,0);
+  const gas=movimientos.filter(m=>m.tipo==='gasto').reduce((s,m)=>s+m.monto,0);
+  const ahorro=movimientos.filter(m=>m.cat==='ahorro').reduce((s,m)=>s+m.monto,0);
+  const mrr_r=movimientos.filter(m=>m.cat==='mrr').reduce((s,m)=>s+m.monto,0);
+  const nec=movimientos.filter(m=>['vivienda','comida','transporte'].includes(m.cat)).reduce((s,m)=>s+m.monto,0);
+  const balance=ing-gas;
+  if(ing===0)return{score:0,indicadores:[],alertas:[]};
+  const pA=ahorro/ing*100,pG=gas/ing*100,pM=mrr_r/ing*100,pN=nec/ing*100;
+  const i1=Math.min(20,Math.round((pA/20)*20)),i2=Math.min(20,balance>0?Math.min(balance/ing,1)*20:0),i3=Math.min(20,Math.round(((100-pG)/70)*20)),i4=Math.min(20,Math.round((pM/30)*20)),i5=Math.min(20,Math.round(((50-Math.abs(pN-50))/50)*20));
+  const score=Math.min(100,i1+i2+i3+i4+i5);
+  const indicadores=[
+    {label:'Control del ahorro',val:pA.toFixed(1)+'%',meta:'≥20%',pts:i1,color:pA>=20?'#1D9E75':'#BA7517',desc:pA>=20?'En rango controlado':'Aumenta tu porcentaje de ahorro'},
+    {label:'Control del balance',val:'$'+Math.round(balance).toLocaleString(),meta:'Positivo',pts:i2,color:balance>=0?'#1D9E75':'#E24B4A',desc:balance>=0?'Gastas menos de lo que entra':'Déficit — revisa tus gastos hoy'},
+    {label:'Control de gastos',val:pG.toFixed(1)+'%',meta:'<70%',pts:i3,color:pG<70?'#1D9E75':'#E24B4A',desc:pG<70?'Gastos bajo control':'Gastos fuera del límite controlado'},
+    {label:'Control recurrente',val:pM.toFixed(1)+'%',meta:'≥30%',pts:i4,color:pM>=30?'#1D9E75':'#185FA5',desc:pM>=30?'Ingresos recurrentes sólidos':'Activa más canales de ingreso recurrente'},
+    {label:'Control de necesidades',val:pN.toFixed(1)+'%',meta:'~50%',pts:i5,color:Math.abs(pN-50)<=15?'#1D9E75':'#BA7517',desc:Math.abs(pN-50)<=15?'Distribución controlada':'Ajusta la distribución 50/30/20'},
+  ];
+  const alertas=[];
+  if(pA<10)alertas.push({tipo:'neg',icon:'⚠️',text:'Tu ahorro está bajo 10%. Para tener finanzas controladas necesitas al menos 20%.'});
+  if(balance<0)alertas.push({tipo:'neg',icon:'📉',text:'Balance negativo — gastas más de lo que entra. Prioridad número uno de control.'});
+  if(pM<15)alertas.push({tipo:'neu',icon:'💡',text:'Tus ingresos recurrentes son menores al 15%. Aquí está tu mayor palanca de control.'});
+  if(pA>=20&&balance>0)alertas.push({tipo:'pos',icon:'🏆',text:'Ahorro +20% con balance positivo. Tus finanzas están bien controladas. Reinvierte.'});
+  if(pM>=30)alertas.push({tipo:'pos',icon:'🚀',text:'MRR supera el 30% de tus ingresos. Control recurrente activado — escala.'});
+  if(alertas.length===0)alertas.push({tipo:'neu',icon:'ℹ️',text:'Registra más movimientos para obtener alertas de control personalizadas.'});
+  return{score,indicadores,alertas};
+}
+
+function renderControlFin(){
+  const s=calcControl(),nivel=NIVELES.find(n=>s.score>=n.min),col=nivel.color;
+  const arc=document.getElementById('ctrl-arc');
+  arc.style.strokeDashoffset=314-(314*s.score/100);arc.style.stroke=col;
+  document.getElementById('ctrl-num').textContent=s.score;document.getElementById('ctrl-num').style.color=col;
+  document.getElementById('ctrl-estado').textContent=nivel.label;document.getElementById('ctrl-estado').style.color=col;
+  document.getElementById('ctrl-consejo').textContent=nivel.consejo;
+  document.getElementById('d-ctrl-score').textContent=s.score+'/100';document.getElementById('d-ctrl-score').style.color=s.score>0?col:'#999';
+  document.getElementById('d-ctrl-label').textContent=nivel.label.toLowerCase();
+  document.getElementById('indicadores-lista').innerHTML=s.indicadores.length===0?'<div class="empty-state">Registra movimientos para activar los indicadores de control</div>':s.indicadores.map(ind=>`<div class="indicador"><div class="ind-icon" style="background:${ind.color}22;color:${ind.color};">${ind.label.charAt(0)}</div><div class="ind-content"><div class="ind-label">${ind.label} <span style="font-size:11px;color:#999;">— meta ${ind.meta}</span></div><div class="ind-desc">${ind.desc}</div><div class="ind-bar"><div class="ind-bar-fill" style="width:${Math.round(ind.pts/20*100)}%;background:${ind.color};"></div></div></div><div class="ind-val" style="color:${ind.color};">${ind.val}</div></div>`).join('');
+  const cA={pos:'#EAF3DE',neg:'#FCEBEB',neu:'#E6F1FB'},tA={pos:'#3B6D11',neg:'#A32D2D',neu:'#185FA5'};
+  document.getElementById('alertas-lista').innerHTML=s.alertas.map(a=>`<div class="alerta" style="background:${cA[a.tipo]};"><span class="alerta-icon">${a.icon}</span><div class="alerta-text" style="color:${tA[a.tipo]};">${a.text}</div></div>`).join('');
+  if(ctrlChart)ctrlChart.destroy();
+  const labs=s.indicadores.length>0?s.indicadores.map(i=>i.label.split(' ').slice(-1)[0]):['Sin datos'];
+  const dat=s.indicadores.length>0?s.indicadores.map(i=>Math.round(i.pts/20*100)):[0];
+  const cols=s.indicadores.length>0?s.indicadores.map(i=>i.color):['#888'];
+  ctrlChart=new Chart(document.getElementById('ctrl-chart').getContext('2d'),{type:'bar',data:{labels:labs,datasets:[{label:'% controlado',data:dat,backgroundColor:cols.map(c=>c+'88'),borderColor:cols,borderWidth:1,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{font:{size:10},color:'#999'}},y:{max:100,grid:{color:'rgba(128,128,128,0.08)'},ticks:{font:{size:10},color:'#999',callback:v=>v+'%'}}}}});
+}
+
+function registrarLunes(){
+  const val=parseFloat(document.getElementById('lunes-input').value);
+  if(!val||val<0)return;
+  registrosLunes.push({mrr:Math.round(val),label:`S${registrosLunes.length+1}`,fecha:new Date().toLocaleDateString('es',{day:'2-digit',month:'short'})});
+  if(registrosLunes.length>8)registrosLunes.shift();
+  document.getElementById('lunes-input').value='';
+  renderLunes();syncDashboardLunes();
+}
+
+function renderLunes(){
+  const n=registrosLunes.length;
+  if(n===0){document.getElementById('lunes-estado').innerHTML='<div class="empty-state" style="padding:1rem 0;">📅 Registra tu MRR real de esta semana</div>';document.getElementById('lunes-historial-card').style.display='none';return;}
+  document.getElementById('lunes-estado').innerHTML='';document.getElementById('lunes-historial-card').style.display='block';
+  const ultimo=registrosLunes[n-1].mrr,anterior=n>=2?registrosLunes[n-2].mrr:null,delta=anterior!==null?ultimo-anterior:null,deltaPct=anterior?Math.round((delta/anterior)*100):null;
+  document.getElementById('lunes-ultimo').textContent='$'+ultimo.toLocaleString();
+  document.getElementById('lunes-ultimo').style.color=delta===null||delta>=0?'#1D9E75':'#A32D2D';
+  if(delta!==null){const col=delta>=0?'#1D9E75':'#A32D2D',bg=delta>=0?'#EAF3DE':'#FCEBEB',arrow=delta>=0?'↑':'↓';document.getElementById('lunes-delta-badge').innerHTML=`<span style="font-size:13px;font-weight:500;padding:3px 10px;border-radius:6px;background:${bg};color:${col};">${arrow} ${delta>=0?'+':''}$${Math.abs(delta).toLocaleString()} (${deltaPct>=0?'+':''}${deltaPct}%)</span>`;}
+  else{document.getElementById('lunes-delta-badge').innerHTML='<span style="font-size:12px;color:#999;">Primera semana registrada</span>';}
+  let racha=1;for(let i=n-1;i>0;i--){if(registrosLunes[i].mrr>=registrosLunes[i-1].mrr)racha++;else break;}
+  document.getElementById('lunes-racha-txt').textContent=racha>1?`${racha} semanas en crecimiento`:n===1?'Primera semana — sigue registrando':'MRR bajó esta semana — revisa qué pasó';
+  document.getElementById('d-racha').textContent=racha;
+  if(lunesChart)lunesChart.destroy();
+  const colores=registrosLunes.map((r,i)=>i===0?'#B5D4F4':r.mrr>=(registrosLunes[i-1]?.mrr||0)?'#1D9E75':'#E24B4A');
+  lunesChart=new Chart(document.getElementById('lunes-chart').getContext('2d'),{type:'bar',data:{labels:registrosLunes.map(r=>r.label+' '+r.fecha),datasets:[{label:'MRR real',data:registrosLunes.map(r=>r.mrr),backgroundColor:colores,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{font:{size:10},color:'#999'}},y:{grid:{color:'rgba(128,128,128,0.08)'},ticks:{font:{size:10},color:'#999',callback:v=>'$'+(v>=1000?(v/1000).toFixed(0)+'k':v)}}}}});
+  const max=Math.max(...registrosLunes.map(r=>r.mrr));
+  document.getElementById('lunes-lista').innerHTML=[...registrosLunes].reverse().map((r,i,arr)=>{const prev=arr[i+1],d=prev?r.mrr-prev.mrr:null,col=d===null?'#999':d>=0?'#1D9E75':'#A32D2D',ds=d===null?'—':(d>=0?'+':'')+'$'+Math.abs(d).toLocaleString();return`<div class="semana-row"><span class="semana-label">${r.label}</span><span class="semana-val" style="color:${col};">$${r.mrr.toLocaleString()}</span><span class="semana-delta" style="color:${col};">${ds}</span><div class="semana-bar-wrap"><div class="semana-bar-fill" style="width:${Math.round(r.mrr/max*100)}%;background:${d===null||d>=0?'#185FA5':'#E24B4A'};"></div></div></div>`;}).join('');
+  const p=getParams(),meses=buildProjection(p),mrr0=BASE*p.price,proyIdx=Math.min(n-1,meses.length-1),proyVal=n===1?mrr0:meses[proyIdx-1].mrr,diff=ultimo-proyVal,diffCol=diff>=0?'#1D9E75':'#A32D2D';
+  document.getElementById('lunes-vs-proj').innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;"><div class="metric"><div class="metric-label">MRR real</div><div class="metric-value" style="color:#185FA5;">$${ultimo.toLocaleString()}</div></div><div class="metric"><div class="metric-label">MRR proyectado</div><div class="metric-value">$${Math.round(proyVal).toLocaleString()}</div></div><div class="metric"><div class="metric-label">Diferencia</div><div class="metric-value" style="color:${diffCol};">${diff>=0?'+':''}$${Math.abs(Math.round(diff)).toLocaleString()}</div></div></div><p style="font-size:12px;color:#555;margin-top:10px;">${diff>=0?'Tu MRR real supera la proyección. El sistema de finanzas controladas está funcionando.':'Tu MRR real está por debajo de la proyección. Revisa el churn y los nuevos suscriptores.'}</p>`;
+}
+
+function syncDashboardLunes(){
+  const n=registrosLunes.length;document.getElementById('d-semanas').textContent=n;
+  if(n===0){document.getElementById('d-mrr-real').textContent='—';document.getElementById('d-mrr-real-sub').textContent='sin registros';document.getElementById('d-tendencia').textContent='—';return;}
+  const ultimo=registrosLunes[n-1].mrr,anterior=n>=2?registrosLunes[n-2].mrr:null;
+  document.getElementById('d-mrr-real').textContent='$'+ultimo.toLocaleString();
+  document.getElementById('d-mrr-real-sub').textContent='semana '+registrosLunes[n-1].label;
+  if(anterior){const d=ultimo-anterior,pct=Math.round(d/anterior*100),col=d>=0?'#1D9E75':'#A32D2D';document.getElementById('d-tendencia').textContent=(d>=0?'+':'')+pct+'%';document.getElementById('d-tendencia').style.color=col;}
+  else document.getElementById('d-tendencia').textContent='sem 1';
+}
+
+function addGasto(){const n=document.getElementById('g-nombre').value.trim(),m=parseFloat(document.getElementById('g-monto').value);if(!n||!m||m<=0)return;gastosFijos.push({id:++gastoIdSeq,nombre:n,monto:m});document.getElementById('g-nombre').value='';document.getElementById('g-monto').value='';renderLibertad();}
+function deleteGasto(id){gastosFijos=gastosFijos.filter(g=>g.id!==id);renderLibertad();}
+function renderLibertad(){
+  const total=gastosFijos.reduce((s,g)=>s+g.monto,0),meta=Math.round(total*1.3);
+  document.getElementById('gastos-lista').innerHTML=gastosFijos.length===0?'<div class="empty-state" style="padding:1rem 0;">Agrega tus gastos fijos mensuales</div>':gastosFijos.map(g=>`<div class="gasto-row"><input type="text" value="${g.nombre}" style="flex:1;" readonly/><input type="number" value="${g.monto}" style="width:90px;" readonly/><button class="gasto-del" onclick="deleteGasto(${g.id})">✕</button></div>`).join('')+`<div style="display:flex;justify-content:space-between;font-size:12px;margin-top:6px;padding-top:6px;border-top:0.5px solid #f0f0f0;"><span style="color:#555;">Total gastos fijos</span><span style="font-weight:500;">$${Math.round(total).toLocaleString()}/mes</span></div><div style="display:flex;justify-content:space-between;font-size:12px;margin-top:3px;"><span style="color:#555;">Meta de control total</span><span style="font-weight:500;color:#1D9E75;">$${meta.toLocaleString()}/mes</span></div>`;
+  const p=getParams(),meses=buildProjection(p),mrr0=BASE*p.price,todos=[{mes:0,mrr:mrr0},...meses];
+  const mesCtrl=todos.find(m=>m.mrr>=meta),maxMrr=Math.max(...todos.map(m=>m.mrr),meta);
+  const res=document.getElementById('libertad-resultado');
+  if(gastosFijos.length===0){res.innerHTML='';document.getElementById('d-mes-libertad').textContent='—';document.getElementById('d-libertad-sub').textContent='define gastos en MRR';return;}
+  if(mrr0>=meta){res.innerHTML=`<div class="libertad-hero"><div class="libertad-mes">¡Ya!</div><div class="libertad-label">Tu MRR actual cubre tus gastos — tienes control total</div><div class="libertad-mrr-needed">MRR: $${Math.round(mrr0).toLocaleString()} · Meta: $${meta.toLocaleString()}</div></div>`;document.getElementById('d-mes-libertad').textContent='Ya';document.getElementById('d-libertad-sub').textContent='control total activado';}
+  else if(mesCtrl){res.innerHTML=`<div class="libertad-hero"><div class="libertad-mes">Mes ${mesCtrl.mes}</div><div class="libertad-label">cuando alcanzas el control total de tus finanzas</div><div class="libertad-mrr-needed">MRR proyectado: $${Math.round(mesCtrl.mrr).toLocaleString()} · Meta: $${meta.toLocaleString()}</div></div>`;document.getElementById('d-mes-libertad').textContent='Mes '+mesCtrl.mes;document.getElementById('d-libertad-sub').textContent='control total proyectado';}
+  else{const u=todos[todos.length-1],pct=Math.round(u.mrr/meta*100);res.innerHTML=`<div class="libertad-hero"><div class="libertad-mes" style="color:#BA7517;">${pct}%</div><div class="libertad-label">de control total al mes 12 — ajusta crecimiento o reduce gastos</div></div>`;document.getElementById('d-mes-libertad').textContent='>12m';document.getElementById('d-libertad-sub').textContent='ajusta params en Tracker';}
+  document.getElementById('libertad-timeline').innerHTML=todos.slice(0,13).map(m=>{const pct=Math.min(100,Math.round(m.mrr/maxMrr*100)),mPct=Math.min(100,Math.round(meta/maxMrr*100)),libre=m.mrr>=meta;return`<div class="tl-row"><span class="tl-mes">${m.mes===0?'Hoy':'M'+m.mes}</span><div class="tl-bar-wrap"><div class="tl-bar-mrr" style="width:${pct}%;background:${libre?'#1D9E75':'#185FA5'};"></div><div class="tl-bar-meta" style="left:${mPct}%;"></div></div><span class="tl-val" style="color:${libre?'#1D9E75':'#555'};">$${Math.round(m.mrr/1000).toFixed(0)}k</span><span class="tl-check">${libre?'✓':''}</span></div>`;}).join('');
+}
+
+const MODULOS=[{id:0,titulo:'Fundamentos de control',color:'#1D9E75',lecciones:[{id:'1-1',titulo:'¿Qué son las finanzas controladas?',dur:'3 min',contenido:'Un sistema donde tú decides adónde va cada dólar antes de que llegue.',concepto:{label:'Definición',texto:'Finanzas controladas: cada ingreso tiene destino asignado y cada gasto tiene justificación medible.'}},{id:'1-2',titulo:'Ingreso vs riqueza',dur:'4 min',contenido:'Ganar mucho no es lo mismo que tener control. La riqueza se mide en tiempo de autonomía.',concepto:{label:'Fórmula',texto:'Control = Ingresos − Gastos × Tiempo. Sin diferencial positivo no hay control real.'}},{id:'1-3',titulo:'El error de vivir del flujo',dur:'3 min',contenido:'Cuando gastas todo lo que entra, no tienes control — tienes dependencia del siguiente ingreso.',concepto:{label:'Regla',texto:'Paga primero tu sistema. Ahorro e inversión el día 1, no con lo que sobre.'}},{id:'1-4',titulo:'Los 3 pilares del control',dur:'5 min',contenido:'Escala, margen y recurrencia. Los tres juntos = control financiero total.',concepto:{label:'Los 3 pilares',texto:'Escala + Margen + Recurrencia = Control financiero total.'}},{id:'1-5',titulo:'Tu número de control total',dur:'4 min',contenido:'El MRR mínimo que cubre tus gastos fijos con 30% de colchón.',concepto:{label:'Ejercicio',texto:'Gastos fijos + 30% = número de control total. Calcúlalo en el simulador del tab MRR.'}},]},{id:1,titulo:'Ingresos recurrentes controlados',color:'#185FA5',lecciones:[{id:'2-1',titulo:'¿Qué es el MRR?',dur:'4 min',contenido:'Ingreso que se repite cada mes sin que tengas que vender de nuevo.',concepto:{label:'Fórmula',texto:'MRR = Suscriptores × Precio. Regístralo cada lunes en el tab Lunes.'}},{id:'2-2',titulo:'Diseña tu oferta recurrente',dur:'5 min',contenido:'Funciona cuando el cliente recibe valor nuevo o acceso continuo cada mes.',concepto:{label:'Prueba',texto:'¿Por qué el cliente renovaría el próximo mes? Si no tienes respuesta, rediseña.'}},{id:'2-3',titulo:'La lógica de los 3 tiers',dur:'4 min',contenido:'Básico convierte. Pro rentabiliza. Elite financia el crecimiento.',concepto:{label:'Distribución',texto:'60% Básico · 30% Pro · 10% Elite. El valor distribuye solo.'}},{id:'2-4',titulo:'Churn: el enemigo del control',dur:'5 min',contenido:'Un 5% de churn mensual rompe tu control financiero.',concepto:{label:'Regla',texto:'Cada 1% de churn reducido ≈ 15% de crecimiento en MRR anualizado.'}},{id:'2-5',titulo:'LTV: el valor controlado',dur:'4 min',contenido:'Ingreso total que un suscriptor genera durante su relación contigo.',concepto:{label:'Fórmula',texto:'LTV = Precio ÷ Churn. Con $47/mo y 3% churn: LTV = $1,567.'}},]},{id:2,titulo:'Control de gastos y margen',color:'#BA7517',lecciones:[{id:'3-1',titulo:'La regla 50/30/20',dur:'4 min',contenido:'50% necesidades, 30% crecimiento, 20% ganancia.',concepto:{label:'Aplicación',texto:'Clasifica cada gasto antes de hacerlo. Sin clasificación, nada está controlado.'}},{id:'3-2',titulo:'Margen bruto vs neto',dur:'3 min',contenido:'Margen neto controlado para negocio digital: 60-80%.',concepto:{label:'Meta',texto:'Margen neto = (MRR − gastos) ÷ MRR × 100. Meta: ≥ 60%.'}},{id:'3-3',titulo:'El costo de perder el control',dur:'4 min',contenido:'$100/mes sin control = $1,200/año que no crece.',concepto:{label:'Pregunta',texto:'¿Este gasto genera suscriptores, los retiene, o mejora la entrega? Si no, elimínalo.'}},{id:'3-4',titulo:'Precio con control',dur:'5 min',contenido:'El precio es lo que vale para quien lo recibe, no lo que cuesta.',concepto:{label:'Fórmula',texto:'Precio controlado = Valor percibido ÷ 10.'}},{id:'3-5',titulo:'Reinversión controlada del 20%',dur:'4 min',contenido:'20% de la ganancia neta vuelve al negocio. Control compuesto.',concepto:{label:'Efecto',texto:'Reinversión del 20% mensual = crecimiento que se autofinancia.'}},]},{id:3,titulo:'Escala con control',color:'#993556',lecciones:[{id:'4-1',titulo:'Del producto al ecosistema controlado',dur:'5 min',contenido:'Un ecosistema controlado: el cliente sube de nivel sin salir de tu mundo.',concepto:{label:'Mapa',texto:'Guía $9-27 → Membresía $47-197 → Curso $297-497 → Consultoría $1,000+.'}},{id:'4-2',titulo:'Adquisición controlada',dur:'4 min',contenido:'Contenido, referidos y comunidad. Control orgánico antes que publicidad.',concepto:{label:'Pirámide',texto:'Base: contenido. Medio: referidos. Cima: publicidad. De abajo hacia arriba.'}},{id:'4-3',titulo:'La semana de control financiero',dur:'3 min',contenido:'Lunes: MRR real. Miércoles: gastos. Viernes: ingresos. Fin de mes: nivel de control.',concepto:{label:'Rutina',texto:'30 minutos semanales de control previenen el 80% de los problemas de flujo.'}},{id:'4-4',titulo:'Cuándo delegar para mantener control',dur:'4 min',contenido:'Delegar es control. Lo que haces y no deberías, rompe el control de tu tiempo.',concepto:{label:'Regla',texto:'Delega cuando el costo < tu tasa horaria y libera tiempo estratégico.'}},{id:'4-5',titulo:'Control financiero total: definición',dur:'5 min',contenido:'Control total = MRR > gastos × 1.3. Con 2,500 suscriptores está más cerca de lo que parece.',concepto:{label:'Fórmula',texto:'Úsalo en el simulador MRR + registra cada lunes para rastrear cuándo llegas.'}},]}];
+const GLOSARIO=[{term:'MRR',def:'Monthly Recurring Revenue — ingreso mensual recurrente predecible.'},{term:'ARR',def:'Annual Recurring Revenue — MRR × 12.'},{term:'Churn',def:'Tasa de cancelación mensual. El mayor riesgo para el control de tus ingresos.'},{term:'LTV',def:'Lifetime Value — LTV = Precio ÷ Churn.'},{term:'CAC',def:'Customer Acquisition Cost. Control sano: LTV > 3× CAC.'},{term:'Margen neto',def:'Porcentaje del ingreso tras todos los gastos. Meta digital: 60-80%.'},{term:'Tier',def:'Nivel de precio y valor. Básico, Pro y Elite.'},{term:'Ecosistema',def:'Productos interconectados donde el cliente sube de nivel.'},{term:'Número de control total',def:'MRR mínimo que cubre gastos fijos + 30% colchón.'},{term:'Regla 50/30/20',def:'50% necesidades, 30% deseos, 20% ahorro/inversión.'},{term:'Flujo de caja',def:'Movimiento real de dinero. Lo que determina el control operativo.'},{term:'Reinversión controlada',def:'Destinar el 20% de ganancia a crecimiento compuesto.'}];
+
+function setEduTab(tab,btn){document.querySelectorAll('.edu-subtab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.getElementById('edu-lecciones').style.display=tab==='lecciones'?'block':'none';document.getElementById('edu-glosario').style.display=tab==='glosario'?'block':'none';if(tab==='glosario')document.getElementById('glosario-lista').innerHTML=GLOSARIO.map(g=>`<div class="glosario-item"><div class="glosario-term">${g.term}</div><div class="glosario-def">${g.def}</div></div>`).join('');}
+function renderEdu(){const done=leccionesDone.size;document.getElementById('e-done').textContent=done;document.getElementById('e-pct').textContent=Math.round(done/20*100)+'%';document.getElementById('edu-modulos').innerHTML=MODULOS.map((m,i)=>{const mD=m.lecciones.filter(l=>leccionesDone.has(l.id)).length,mP=Math.round(mD/m.lecciones.length*100);return`<div class="edu-mod ${i===moduloActivoIdx?'active':''}" onclick="setModulo(${i})"><div class="edu-mod-num" style="color:${m.color};">Módulo ${i+1}</div><div class="edu-mod-title">${m.titulo}</div><div class="edu-mod-lecciones">${mD}/${m.lecciones.length} · ${mP}%</div><div class="edu-mod-bar"><div class="edu-mod-fill" style="width:${mP}%;background:${m.color};"></div></div></div>`;}).join('');const mod=MODULOS[moduloActivoIdx];document.getElementById('edu-lecciones-lista').innerHTML=mod.lecciones.map((lec,i)=>{const isDone=leccionesDone.has(lec.id);return`<div class="leccion" style="${isDone?'opacity:0.7;':''}"><div class="leccion-header" onclick="toggleLeccion('${lec.id}')"><div class="lec-num" style="background:${mod.color}22;color:${mod.color};">${i+1}</div><span class="lec-title" style="${isDone?'text-decoration:line-through;color:#999;':''}">${lec.titulo}</span><span class="lec-dur">${lec.dur}</span><div class="lec-check ${isDone?'done':''}" onclick="toggleLecDone('${lec.id}',event)">${isDone?'✓':''}</div></div><div class="leccion-body" id="lec-body-${lec.id}"><p>${lec.contenido}</p><div class="concepto"><div class="concepto-label">${lec.concepto.label}</div><p>${lec.concepto.texto}</p></div></div></div>`;}).join('');}
+function setModulo(i){moduloActivoIdx=i;renderEdu();}
+function toggleLeccion(id){document.getElementById('lec-body-'+id).classList.toggle('open');}
+function toggleLecDone(id,e){e.stopPropagation();if(leccionesDone.has(id))leccionesDone.delete(id);else leccionesDone.add(id);renderEdu();}
+
+const CATS_I=[{id:'salario',label:'Salario',color:'#1D9E75'},{id:'mrr',label:'MRR / suscripciones',color:'#185FA5'},{id:'freelance',label:'Freelance',color:'#0F6E56'},{id:'ventas',label:'Ventas',color:'#5DCAA5'},{id:'otro-ing',label:'Otro ingreso',color:'#9FE1CB'}];
+const CATS_G=[{id:'vivienda',label:'Vivienda / renta',color:'#E24B4A'},{id:'comida',label:'Comida',color:'#BA7517'},{id:'transporte',label:'Transporte',color:'#EF9F27'},{id:'herramientas',label:'Herramientas',color:'#993556'},{id:'marketing',label:'Marketing',color:'#D4537E'},{id:'personal',label:'Personal',color:'#888780'},{id:'ahorro',label:'Ahorro',color:'#185FA5'},{id:'otro-gas',label:'Otro gasto',color:'#B4B2A9'}];
+function allCats(){return[...CATS_I,...CATS_G];}function getCat(id){return allCats().find(c=>c.id===id)||{label:id,color:'#888'};}function isIngreso(id){return CATS_I.some(c=>c.id===id);}
+function populateCatSelect(){const s=document.getElementById('mov-cat');s.innerHTML='<optgroup label="Ingresos">'+CATS_I.map(c=>`<option value="${c.id}">${c.label}</option>`).join('')+'</optgroup><optgroup label="Gastos">'+CATS_G.map(c=>`<option value="${c.id}">${c.label}</option>`).join('')+'</optgroup>';}
+function addMovimiento(){const desc=document.getElementById('mov-desc').value.trim(),monto=parseFloat(document.getElementById('mov-monto').value),cat=document.getElementById('mov-cat').value;if(!desc||!monto||monto<=0)return;movimientos.unshift({id:Date.now(),desc,monto,cat,tipo:isIngreso(cat)?'ingreso':'gasto'});document.getElementById('mov-desc').value='';document.getElementById('mov-monto').value='';renderRegistro();renderControlFin();syncAll();}
+function deleteMovimiento(id){movimientos=movimientos.filter(m=>m.id!==id);renderRegistro();renderControlFin();syncAll();}
+function setControlTab(tab,btn){currentControlTab=tab;document.querySelectorAll('.cat-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.getElementById('control-todos').style.display=tab==='resumen'?'none':'block';document.getElementById('control-resumen').style.display=tab==='resumen'?'block':'none';renderRegistro();}
+function fmtM(n){return'$'+n.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:2});}
+function renderRegistro(){
+  let lista=movimientos;
+  if(currentControlTab==='ingresos')lista=movimientos.filter(m=>m.tipo==='ingreso');
+  if(currentControlTab==='gastos')lista=movimientos.filter(m=>m.tipo==='gasto');
+  const tI=movimientos.filter(m=>m.tipo==='ingreso').reduce((s,m)=>s+m.monto,0),tG=movimientos.filter(m=>m.tipo==='gasto').reduce((s,m)=>s+m.monto,0),bal=tI-tG;
+  document.getElementById('r-ing').textContent=fmtM(tI);document.getElementById('r-gas').textContent=fmtM(tG);document.getElementById('r-bal').textContent=fmtM(bal);document.getElementById('r-bal').style.color=bal>=0?'#1D9E75':'#A32D2D';
+  const gXc={};movimientos.filter(m=>m.tipo==='gasto').forEach(m=>{gXc[m.cat]=(gXc[m.cat]||0)+m.monto;});const mxC=Math.max(...Object.values(gXc),1);
+  document.getElementById('resumen-cats').innerHTML=Object.entries(gXc).length===0?'<div class="empty-state">Sin gastos aún</div>':Object.entries(gXc).sort((a,b)=>b[1]-a[1]).map(([cId,amt])=>{const cat=getCat(cId);return`<div class="cat-row"><span class="cat-label-sm">${cat.label}</span><div class="cat-bar-wrap"><div class="cat-bar-fill" style="width:${Math.round(amt/mxC*100)}%;background:${cat.color};"></div></div><span class="cat-amount" style="color:${cat.color};">${fmtM(amt)}</span></div>`;}).join('');
+  if(tI>0){const nec=movimientos.filter(m=>['vivienda','comida','transporte'].includes(m.cat)).reduce((s,m)=>s+m.monto,0),des=movimientos.filter(m=>['personal','marketing'].includes(m.cat)).reduce((s,m)=>s+m.monto,0),aho=movimientos.filter(m=>m.cat==='ahorro').reduce((s,m)=>s+m.monto,0);document.getElementById('regla-5030').innerHTML='<div style="font-size:12px;color:#999;margin-bottom:10px;">Meta: 50% necesidades · 30% deseos · 20% ahorro</div>'+[{label:'Necesidades',pct:Math.round(nec/tI*100),meta:50,color:'#E24B4A'},{label:'Deseos',pct:Math.round(des/tI*100),meta:30,color:'#BA7517'},{label:'Ahorro',pct:Math.round(aho/tI*100),meta:20,color:'#185FA5'}].map(r=>`<div style="margin-bottom:10px;"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span style="color:#555;">${r.label}</span><span style="color:${r.pct>r.meta?'#A32D2D':'#3B6D11'};font-weight:500;">${r.pct}% <span style="color:#999;font-weight:400;">(meta ${r.meta}%)</span></span></div><div class="progress-bar"><div class="progress-fill" style="width:${Math.min(r.pct,100)}%;background:${r.color};"></div></div></div>`).join('');}else{document.getElementById('regla-5030').innerHTML='<div class="empty-state">Registra ingresos para activar</div>';}
+  const c=document.getElementById('mov-lista');if(lista.length===0){c.innerHTML='<div class="empty-state">📥 Sin movimientos aún</div>';return;}
+  c.innerHTML=`<table class="movs-table"><thead><tr><th>Descripción</th><th>Categoría</th><th style="text-align:right;">Monto</th><th></th></tr></thead><tbody>${lista.map(m=>{const cat=getCat(m.cat);return`<tr><td style="font-weight:500;">${m.desc}</td><td><span class="cat-pill" style="background:${cat.color}22;color:${cat.color};">${cat.label}</span></td><td style="text-align:right;font-weight:500;color:${m.tipo==='ingreso'?'#1D9E75':'#A32D2D'};">${m.tipo==='ingreso'?'+':'-'}${fmtM(m.monto)}</td><td><button class="del-btn" onclick="deleteMovimiento(${m.id})">✕</button></td></tr>`;}).join('')}</tbody></table>`;
+  document.getElementById('d-ingresos').textContent=fmtM(tI);
+  const tot=tI+tG,pI=tot>0?Math.round(tI/tot*100):50;
+  document.getElementById('d-balance-bar').innerHTML=`<div class="balance-seg" style="width:${pI}%;background:#1D9E75;"></div><div class="balance-seg" style="width:${100-pI}%;background:#E24B4A;"></div>`;
+  document.getElementById('d-pct-ing').textContent=`Ingresos ${pI}%`;document.getElementById('d-pct-gas').textContent=`Gastos ${100-pI}%`;
+}
+
+const PASOS=[{id:1,color:'#1D9E75',tiempo:'Semana 1',title:'Diagnóstico financiero',desc:'Suma ingresos y gastos. La diferencia es tu margen de control real.',variantes:{empleado:'Incluye salario neto y cualquier ingreso extra.',freelancer:'Promedio 3 meses conservador.',dueno:'Separa lo que el negocio te paga de lo que genera.'}},{id:2,color:'#1D9E75',tiempo:'Semana 1',title:'Define tus 3 números de control',desc:'Cuánto necesitas, cuánto ahorrar, cuánto reinvertir.',variantes:{empleado:'20% de ahorro antes de gastos discrecionales.',freelancer:'30% para impuestos y meses bajos.',dueno:'Sueldo fijo aunque el negocio varíe.'}},{id:3,color:'#185FA5',tiempo:'Semana 2',title:'Elimina gastos fuera de control',desc:'Genera dinero, bienestar, o no sirve. Elimina el tercero.',variantes:{empleado:'Suscripciones duplicadas y membresías sin uso.',freelancer:'Herramientas que no generan proyectos.',dueno:'Lo que no aumenta ventas ni reduce costos.'}},{id:4,color:'#185FA5',tiempo:'Semana 2',title:'Activa tu primer ingreso recurrente',desc:'Una habilidad que otros necesiten mensualmente.',variantes:{empleado:'Tu conocimiento profesional vale fuera de tu empresa.',freelancer:'Proyectos únicos convertidos en retenciones.',dueno:'Membresía para tus mejores clientes.'}},{id:5,color:'#BA7517',tiempo:'Semana 3',title:'Estructura los 3 tiers de control',desc:'Básico, Pro y Elite desde el día uno.',variantes:{empleado:'Empieza con básico para validar.',freelancer:'Referencia en tus proyectos actuales.',dueno:'Elite con acceso directo a ti.'}},{id:6,color:'#BA7517',tiempo:'Semana 3',title:'Automatiza el cobro',desc:'El dinero llega sin que hagas nada.',variantes:{empleado:'Stripe, Hotmart o Gumroad.',freelancer:'Cobro + onboarding automático.',dueno:'Integra con tu CRM.'}},{id:7,color:'#993556',tiempo:'Semana 4',title:'Registra el MRR cada lunes',desc:'Un número real, cada semana. Tab Lunes en esta app.',variantes:{empleado:'Tu MRR debe superar el 30% del ingreso.',freelancer:'MRR es tu piso de control.',dueno:'MRR negocio y personal: dos métricas.'}},{id:8,color:'#993556',tiempo:'Mes 2+',title:'Reinvierte el 20% del MRR',desc:'20% de ganancia neta vuelve como adquisición.',variantes:{empleado:'Contenido orgánico primero.',freelancer:'Referidos: un mes gratis por nuevo suscriptor.',dueno:'Usa tu base de clientes existente.'}},];
+function setPerfil(p,btn){currentPerfil=p;document.querySelectorAll('.perfil-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderPasos();}
+function togglePaso(id){document.getElementById('paso-body-'+id).classList.toggle('open');}
+function toggleCheck(id,e){e.stopPropagation();if(pasosDone.has(id))pasosDone.delete(id);else pasosDone.add(id);renderPasos();}
+function renderPasos(){
+  const done=pasosDone.size;document.getElementById('p-done').textContent=done;document.getElementById('p-pct').textContent=Math.round(done/8*100)+'%';
+  let dots='';PASOS.forEach((p,i)=>{const isDone=pasosDone.has(p.id),isActive=!isDone&&i===done;dots+=`<div class="step-dot ${isDone?'done':isActive?'active':''}"></div>`;if(i<7)dots+=`<div class="step-line ${isDone?'done':''}"></div>`;});
+  document.getElementById('progress-steps').innerHTML=dots;
+  const pL={empleado:'Si eres empleado',freelancer:'Si eres freelancer',dueno:'Si tienes negocio'}[currentPerfil];
+  document.getElementById('pasos-container').innerHTML=PASOS.map(p=>{const isDone=pasosDone.has(p.id);return`<div class="paso" style="${isDone?'opacity:0.65;':''}"><div class="paso-header" onclick="togglePaso(${p.id})"><div class="paso-num" style="background:${p.color}22;color:${p.color};">${p.id}</div><div style="flex:1;"><div class="paso-title" style="${isDone?'text-decoration:line-through;color:#999;':''}">${p.title}</div></div><span style="font-size:11px;color:#999;margin-right:8px;">${p.tiempo}</span><div class="paso-check ${isDone?'done':''}" onclick="toggleCheck(${p.id},event)">${isDone?'✓':''}</div></div><div class="paso-body" id="paso-body-${p.id}"><p>${p.desc}</p><div class="paso-variante"><div class="paso-variante-label">${pL}</div><p>${p.variantes[currentPerfil]}</p></div></div></div>`;}).join('');
+}
+
+function fmt(n){return n>=10000?(n/1000).toFixed(1).replace(/\.0$/,'')+'k':n>=1000?(n/1000).toFixed(1)+'k':Math.round(n).toString();}
+function fmtFull(n){return Math.round(n).toLocaleString();}
+function fmtMRR(n){return'$'+(n>=1000?(n/1000).toFixed(1)+'k':Math.round(n));}
+function selectTier(t){currentTier=t;document.querySelectorAll('.tier').forEach(e=>e.classList.remove('selected'));document.getElementById('t-'+t).classList.add('selected');syncAll();}
+function getParams(){return{price:TIERS[currentTier],margin:parseInt(document.getElementById('sl-margin').value),growth:parseInt(document.getElementById('sl-growth').value)/100,churn:parseInt(document.getElementById('sl-churn').value)/100,nuevos:parseInt(document.getElementById('inp-nuevos').value)||0};}
+function buildProjection(p){const meses=[];let subs=BASE;for(let i=1;i<=12;i++){const n=Math.round(subs*p.growth)+p.nuevos,b=Math.round(subs*p.churn);subs=subs+n-b;meses.push({mes:i,subs,nuevos:n,bajas:b,neto:n-b,mrr:subs*p.price});}return meses;}
+
+function syncAll(){
+  const p=getParams();
+  document.getElementById('out-margin').textContent=p.margin+'%';
+  document.getElementById('out-growth').textContent=Math.round(p.growth*100)+'%';
+  document.getElementById('out-churn').textContent=Math.round(p.churn*100)+'%';
+  const meses=buildProjection(p),mrr0=BASE*p.price,net0=mrr0*p.margin/100,s12=meses[11].subs;
+  document.getElementById('d-mrr').textContent=fmtMRR(mrr0);
+  const costos=mrr0*(1-p.margin/100);
+  document.getElementById('d-waterfall').innerHTML=`<div class="wf-row"><span class="wf-label">MRR bruto</span><div class="wf-bar-wrap"><div class="wf-bar" style="width:100%;background:#1D9E75;"></div></div><span class="wf-amount" style="color:#1D9E75;">${fmtMRR(mrr0)}</span></div><div class="wf-row"><span class="wf-label">Costos</span><div class="wf-bar-wrap"><div class="wf-bar" style="width:${100-p.margin}%;background:#E24B4A;"></div></div><span class="wf-amount" style="color:#A32D2D;">−${fmtMRR(costos)}</span></div><div class="wf-row"><span class="wf-label">Ganancia neta</span><div class="wf-bar-wrap"><div class="wf-bar" style="width:${p.margin}%;background:#185FA5;"></div></div><span class="wf-amount" style="color:#185FA5;">${fmtMRR(net0)}</span></div>`;
+  document.getElementById('c-mrr').textContent=fmtMRR(mrr0);document.getElementById('c-net').textContent=fmtMRR(net0);document.getElementById('c-ltv').textContent=fmtMRR(p.price*Math.min(18,1/Math.max(0.03,p.churn)));
+  if(calcChart)calcChart.destroy();
+  calcChart=new Chart(document.getElementById('calc-chart').getContext('2d'),{type:'bar',data:{labels:meses.map(m=>'M'+m.mes),datasets:[{label:'MRR',data:meses.map(m=>Math.round(m.mrr)),backgroundColor:'#B5D4F4',borderRadius:3},{label:'Ganancia',data:meses.map(m=>Math.round(m.mrr*p.margin/100)),backgroundColor:'#185FA5',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{labels:{font:{size:11},color:'#555',boxWidth:12}}},scales:{x:{grid:{display:false},ticks:{font:{size:10},color:'#999'}},y:{grid:{color:'rgba(128,128,128,0.08)'},ticks:{font:{size:10},color:'#999',callback:v=>'$'+(v>=1000?(v/1000).toFixed(0)+'k':v)}}}}});
+  document.getElementById('t-m3').textContent=fmtFull(meses[2].subs);document.getElementById('t-m3d').textContent='+'+fmtFull(meses[2].subs-BASE);
+  document.getElementById('t-m6').textContent=fmtFull(meses[5].subs);document.getElementById('t-m6d').textContent='+'+fmtFull(meses[5].subs-BASE);
+  document.getElementById('t-m12').textContent=fmtFull(s12);document.getElementById('t-m12d').textContent='x'+(s12/BASE).toFixed(1);
+  const maxS=Math.max(...meses.map(m=>m.subs));
+  document.getElementById('t-tabla').innerHTML=meses.map(m=>`<tr><td style="color:#999;">Mes ${m.mes}</td><td style="font-weight:500;">${fmtFull(m.subs)}</td><td style="color:#1D9E75;">+${fmtFull(m.nuevos)}</td><td style="color:#A32D2D;">−${fmtFull(m.bajas)}</td><td><span class="badge ${m.neto>=0?'pos':'neg'}">${m.neto>=0?'+':''}${fmtFull(m.neto)}</span></td><td style="color:#185FA5;">${fmtMRR(m.mrr)}</td><td><div class="mini-bar"><div class="mini-fill" style="width:${Math.round(m.subs/maxS*100)}%;background:#185FA5;"></div></div></td></tr>`).join('');
+  document.getElementById('t-hitos').innerHTML=[{label:'3,000 subs',target:3000,color:'#1D9E75',desc:'+500 desde cero'},{label:'5,000 subs',target:5000,color:'#185FA5',desc:'x2 tu base'},{label:'7,500 subs',target:7500,color:'#BA7517',desc:'x3 consolidado'},{label:'10,000 subs',target:10000,color:'#993556',desc:'6 cifras/año'}].map(h=>{const when=meses.find(m=>m.subs>=h.target),pct=Math.min(100,Math.round(s12/h.target*100));return`<div class="milestone"><div class="ms-dot" style="background:${h.color};"></div><div style="flex:1;"><div style="font-size:13px;font-weight:500;color:#1a1a1a;">${h.label} <span style="font-size:11px;color:#999;">— ${h.desc}</span></div><div class="progress-bar" style="margin-top:4px;"><div class="progress-fill" style="width:${pct}%;background:${h.color};"></div></div></div>${when?`<span class="badge pos">Mes ${when.mes}</span>`:`<span class="badge neu">${pct}% mes 12</span>`}</div>`;}).join('');
+  if(trackerChart)trackerChart.destroy();
+  trackerChart=new Chart(document.getElementById('tracker-chart').getContext('2d'),{type:'line',data:{labels:['Cero',...meses.map(m=>'M'+m.mes)],datasets:[{label:'Suscriptores',data:[BASE,...meses.map(m=>m.subs)],borderColor:'#185FA5',backgroundColor:'#E6F1FB66',fill:true,tension:0.35,pointRadius:2,yAxisID:'y'},{label:'MRR',data:[mrr0,...meses.map(m=>Math.round(m.mrr))],borderColor:'#1D9E75',backgroundColor:'transparent',tension:0.35,pointRadius:2,borderDash:[4,3],yAxisID:'y2'}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{labels:{font:{size:11},color:'#555',boxWidth:12}}},scales:{x:{grid:{display:false},ticks:{font:{size:10},color:'#999'}},y:{position:'left',grid:{color:'rgba(128,128,128,0.08)'},ticks:{font:{size:10},color:'#185FA5',callback:v=>fmt(v)}},y2:{position:'right',grid:{display:false},ticks:{font:{size:10},color:'#1D9E75',callback:v=>fmtMRR(v)}}}}});
+  renderLibertad();
+  if(registrosLunes.length>0)renderLunes();
+}
+
+function switchTab(id,btn){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById(id).classList.add('active');btn.classList.add('active');}
+
+const CL={'cl-1':['Define el nicho y el problema de control que resuelves','Crea la guía de finanzas controladas','Establece los 3 tiers con propuesta de valor','Valida con 5 personas antes de automatizar','Diseña el low ticket de entrada ($9–$27)'],'cl-2':['Configura pasarela de cobro recurrente','Crea la secuencia de onboarding automatizada','Construye el área de miembros o canal privado','Programa el ciclo de facturación mensual','Define el proceso de cancelación y retención'],'cl-3':['Crea contenido gratuito que lleve al low ticket','Implementa referidos: descuento por nuevo suscriptor','Mide MRR, churn y LTV cada semana','Activa upsell automático al tier siguiente','Escala el canal que más convierte primero']};
+Object.entries(CL).forEach(([id,items])=>{document.getElementById(id).innerHTML=items.map(item=>`<li><span style="color:#1D9E75;font-size:16px;flex-shrink:0;margin-top:1px;">✓</span><span style="margin-left:4px;">${item}</span></li>`).join('');});
+
+populateCatSelect();
+renderPasos();
+renderRegistro();
+renderControlFin();
+renderEdu();
+renderLunes();
+syncAll();
+</script>
+
+
+</body></html>
