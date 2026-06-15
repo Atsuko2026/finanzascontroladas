@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Membresía Finanzas Controladas</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#fff;color:#1a1a1a;line-height:1.6}
+.page{max-width:600px;margin:0 auto;padding:2rem 1.25rem 4rem}
+.lang-switch{display:flex;gap:4px;justify-content:flex-end;margin-bottom:2rem}
+.lang-btn{padding:5px 14px;font-size:12px;font-weight:500;border:1px solid #ccc;border-radius:8px;background:transparent;color:#666;cursor:pointer;transition:all 0.15s}
+.lang-btn.active{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
+.eyebrow{font-size:12px;font-weight:600;color:#185FA5;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px;text-align:center}
+h1{font-size:28px;font-weight:600;line-height:1.25;margin-bottom:18px;text-align:center;color:#1a1a1a}
+.hero-sub{font-size:16px;color:#555;line-height:1.6;text-align:center;margin-bottom:1.5rem}
+.hero-tag{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#3B6D11;background:#EAF3DE;padding:5px 14px;border-radius:8px;margin:0 auto 2rem;display:flex;justify-content:center;width:fit-content;margin:0 auto 2rem}
+.hero{text-align:center;padding:1rem 0 2rem}
+.divider{border:none;border-top:1px solid #eee;margin:2rem 0}
+.problem p{font-size:15px;color:#555;line-height:1.7;margin-bottom:10px}
+.problem strong{color:#1a1a1a}
+.pain-list{list-style:none;margin:1.25rem 0}
+.pain-list li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:14px;color:#555}
+.pain-list li:last-child{border-bottom:none}
+.pain-x{color:#A32D2D;font-size:16px;font-weight:700;flex-shrink:0;margin-top:1px}
+.section-label{font-size:11px;font-weight:600;color:#999;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:14px}
+.feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:1.25rem 0}
+.feature-card{background:#f8f8f8;border-radius:12px;padding:14px}
+.feature-icon{font-size:20px;margin-bottom:8px}
+.feature-title{font-size:13px;font-weight:600;color:#1a1a1a;margin-bottom:4px}
+.feature-desc{font-size:12px;color:#666;line-height:1.5}
+.proof{background:#f8f8f8;border-radius:12px;padding:1.25rem;margin:1.5rem 0}
+.proof-text{font-size:15px;color:#1a1a1a;line-height:1.6;font-style:italic;margin-bottom:10px}
+.proof-author{font-size:12px;color:#999}
+.price-hero{border:2px solid #185FA5;border-radius:16px;padding:2rem 1.5rem;margin:1.5rem 0;text-align:center;background:#fff}
+.price-name{font-size:12px;font-weight:600;color:#185FA5;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px}
+.price-amount{font-size:56px;font-weight:700;color:#1a1a1a;line-height:1}
+.price-period{font-size:14px;color:#999;margin-bottom:6px}
+.price-cancel{font-size:13px;color:#3B6D11;font-weight:600;margin-bottom:1.5rem}
+.price-includes{list-style:none;text-align:left;margin-bottom:1.5rem;border-top:1px solid #eee;padding-top:1rem}
+.price-includes li{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:#555;padding:6px 0;border-bottom:1px solid #f5f5f5}
+.price-includes li:last-child{border-bottom:none}
+.check{color:#1D9E75;font-size:16px;font-weight:700;flex-shrink:0;margin-top:1px}
+.cta-btn{display:block;width:100%;padding:16px;font-size:16px;font-weight:600;text-align:center;border-radius:10px;cursor:pointer;border:none;background:#185FA5;color:#fff;text-decoration:none;transition:background 0.15s}
+.cta-btn:hover{background:#0C447C}
+.cta-sub{font-size:12px;color:#999;margin-top:10px;text-align:center}
+.guarantee{border:1px solid #C0DD97;background:#EAF3DE;border-radius:12px;padding:1.25rem 1.5rem;margin:1.5rem 0;display:flex;gap:14px;align-items:flex-start}
+.guarantee-icon{font-size:24px;flex-shrink:0}
+.guarantee-title{font-size:14px;font-weight:600;color:#27500A;margin-bottom:4px}
+.guarantee-text{font-size:13px;color:#3B6D11;line-height:1.5}
+.urgency{text-align:center;background:#f8f8f8;border-radius:12px;padding:1.25rem;margin:1.5rem 0}
+.urgency-num{font-size:32px;font-weight:700;color:#185FA5}
+.urgency-label{font-size:13px;color:#666;margin-top:4px}
+.faq-item{padding:12px 0;border-bottom:1px solid #f0f0f0;cursor:pointer}
+.faq-item:last-child{border-bottom:none}
+.faq-q{display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600;color:#1a1a1a;gap:10px}
+.faq-chevron{font-size:14px;color:#999;flex-shrink:0;transition:transform 0.2s}
+.faq-a{font-size:13px;color:#555;line-height:1.6;margin-top:8px;display:none}
+.faq-a.open{display:block}
+.faq-chevron.open{transform:rotate(180deg)}
+.footer-text{font-size:12px;color:#bbb;line-height:1.6;text-align:center;padding-top:1.5rem}
+.final-section{text-align:center;padding:1.5rem 0}
+.final-h{font-size:16px;font-weight:600;color:#1a1a1a;margin-bottom:8px}
+.final-sub{font-size:14px;color:#666;margin-bottom:1.5rem}
+@media(max-width:480px){h1{font-size:22px}.price-amount{font-size:44px}.feature-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="lang-switch">
+    <button class="lang-btn active" onclick="setLang('es',this)">ES</button>
+    <button class="lang-btn" onclick="setLang('en',this)">EN</button>
+  </div>
+  <div class="hero">
+    <div class="eyebrow" id="l-eyebrow">Membresía Finanzas Controladas</div>
+    <h1 id="l-h1">Toma el control de tu dinero.<br>Activa ingresos que trabajan por ti.</h1>
+    <p class="hero-sub" id="l-sub">Un sistema interactivo con control financiero en tiempo real, ingresos recurrentes, plan de acción personalizado e inteligencia artificial — todo por menos de un café al día.</p>
+    <div class="hero-tag">👥 <span id="l-tag">2,500 miembros ya tienen control total</span></div>
+  </div>
+  <hr class="divider">
+  <div class="problem">
+    <p id="l-prob1"><strong>La mayoría de las personas gana dinero pero no lo controla.</strong> Lo gasta antes de que llegue, no sabe cuánto entra cada mes, y nunca tiene claro cuándo podrá dejar de depender de un solo ingreso.</p>
+    <p id="l-prob2">No es falta de disciplina. Es falta de sistema.</p>
+    <ul class="pain-list" id="l-pain-list">
+      <li><span class="pain-x">✗</span>No sabes exactamente cuánto ganas ni cuánto gastas</li>
+      <li><span class="pain-x">✗</span>Trabajas más pero no sientes que avanzas</li>
+      <li><span class="pain-x">✗</span>No tienes ingresos que lleguen aunque no trabajes ese día</li>
+      <li><span class="pain-x">✗</span>No sabes en qué mes podrías tener control total</li>
+    </ul>
+  </div>
+  <hr class="divider">
+  <div>
+    <div class="section-label" id="l-what-label">Lo que incluye tu membresía</div>
+    <div class="feature-grid">
+      <div class="feature-card"><div class="feature-icon">📊</div><div class="feature-title" id="l-f1t">Nivel de control financiero</div><div class="feature-desc" id="l-f1d">Indicador en tiempo real que mide tus finanzas en 5 dimensiones clave.</div></div>
+      <div class="feature-card"><div class="feature-icon">📈</div><div class="feature-title" id="l-f2t">Sistema de ingresos recurrentes</div><div class="feature-desc" id="l-f2d">Calculadora MRR, tracker semanal y simulador de control total.</div></div>
+      <div class="feature-card"><div class="feature-icon">🗺️</div><div class="feature-title" id="l-f3t">Plan de acción personalizado</div><div class="feature-desc" id="l-f3d">8 pasos adaptados a tu perfil — empleado, freelancer o dueño de negocio.</div></div>
+      <div class="feature-card"><div class="feature-icon">✨</div><div class="feature-title" id="l-f4t">IA que te dice qué hacer hoy</div><div class="feature-desc" id="l-f4d">Analiza tu situación real y genera una sola acción concreta para este momento.</div></div>
+      <div class="feature-card"><div class="feature-icon">💰</div><div class="feature-title" id="l-f5t">Registro de gastos e ingresos</div><div class="feature-desc" id="l-f5d">Control real con la regla 50/30/20 aplicada a tus números.</div></div>
+      <div class="feature-card"><div class="feature-icon">📚</div><div class="feature-title" id="l-f6t">20 lecciones + nuevos módulos</div><div class="feature-desc" id="l-f6d">Contenido nuevo cada mes. Tu guía crece contigo.</div></div>
+    </div>
+  </div>
+  <hr class="divider">
+  <div class="proof">
+    <div class="proof-text" id="l-proof">"Llevaba años ganando bien pero nunca me sobraba nada. Con esta membresía vi por primera vez en qué mes iba a tener control total. Eso cambia todo."</div>
+    <div class="proof-author" id="l-proof-author">— María T., emprendedora · Santo Domingo</div>
+  </div>
+  <hr class="divider">
+  <div class="price-hero">
+    <div class="price-name" id="l-price-name">Membresía Finanzas Controladas</div>
+    <div class="price-amount">$19.99</div>
+    <div class="price-period" id="l-price-period">por mes</div>
+    <div class="price-cancel" id="l-price-cancel">🛡️ 25 días para cancelar sin costo</div>
+    <ul class="price-includes" id="l-includes">
+      <li><span class="check">✓</span>Panel de control financiero completo</li>
+      <li><span class="check">✓</span>Simulador — el mes exacto de tu control total</li>
+      <li><span class="check">✓</span>Registro de gastos e ingresos en tiempo real</li>
+      <li><span class="check">✓</span>Plan de acción personalizado por perfil</li>
+      <li><span class="check">✓</span>Tracker semanal del lunes — MRR real</li>
+      <li><span class="check">✓</span>20 lecciones + glosario financiero</li>
+      <li><span class="check">✓</span>Nuevos módulos cada mes</li>
+      <li><span class="check">✓</span>Comunidad privada de miembros</li>
+      <li><span class="check">✓</span>Recomendación diaria con IA</li>
+    </ul>
+    <a href="https://buy.stripe.com/5kQcN68Ls3j1bRm5uq0Ny00" class="cta-btn" id="l-cta">Unirme ahora por $19.99/mes →</a>
+    <div class="cta-sub" id="l-cta-sub">Acceso inmediato · Cancela antes del día 25 sin cargo adicional</div>
+  </div>
+  <div class="guarantee">
+    <div class="guarantee-icon">🛡️</div>
+    <div>
+      <div class="guarantee-title" id="l-gtitle">25 días para decidir — sin presión</div>
+      <div class="guarantee-text" id="l-gtext">Únete hoy. Prueba todo el sistema durante 25 días. Si decides que no es para ti, cancela antes del día 25 y no te cobramos el siguiente mes. Sin formularios, sin excusas, sin preguntas. El riesgo es nuestro. El control es tuyo.</div>
+    </div>
+  </div>
+  <div class="urgency">
+    <div class="urgency-num">$19.99</div>
+    <div class="urgency-label" id="l-urg-label">es lo que cuesta tomar control de tus finanzas este mes — menos que una cena</div>
+  </div>
+  <hr class="divider">
+  <div>
+    <div class="section-label" id="l-faq-label">Preguntas frecuentes</div>
+    <div id="faq-container"></div>
+  </div>
+  <hr class="divider">
+  <div class="final-section">
+    <p class="final-h" id="l-final-h">¿Sigues esperando el momento correcto?</p>
+    <p class="final-sub" id="l-final-sub">El momento correcto es cuando decides tener control. No mañana.</p>
+    <a href="https://buy.stripe.com/5kQcN68Ls3j1bRm5uq0Ny00" class="cta-btn" style="max-width:340px;margin:0 auto;display:block" id="l-final-cta">Tomar el control ahora →</a>
+    <div class="cta-sub" style="margin-top:10px" id="l-final-sub2">$19.99/mes · 25 días para cancelar · acceso inmediato</div>
+  </div>
+  <div class="footer-text" id="l-footer">Membresía Finanzas Controladas · $19.99/mes · Acceso inmediato · 25 días para cancelar sin costo</div>
+</div>
+<script>
+const C={
+  es:{eyebrow:'Membresía Finanzas Controladas',h1:'Toma el control de tu dinero.<br>Activa ingresos que trabajan por ti.',sub:'Un sistema interactivo con control financiero en tiempo real, ingresos recurrentes, plan de acción personalizado e inteligencia artificial — todo por menos de un café al día.',tag:'2,500 miembros ya tienen control total',prob1:'<strong>La mayoría de las personas gana dinero pero no lo controla.</strong> Lo gasta antes de que llegue, no sabe cuánto entra cada mes, y nunca tiene claro cuándo podrá dejar de depender de un solo ingreso.',prob2:'No es falta de disciplina. Es falta de sistema.',pain:['No sabes exactamente cuánto ganas ni cuánto gastas','Trabajas más pero no sientes que avanzas','No tienes ingresos que lleguen aunque no trabajes ese día','No sabes en qué mes podrías tener control total'],whatLabel:'Lo que incluye tu membresía',f1t:'Nivel de control financiero',f1d:'Indicador en tiempo real que mide tus finanzas en 5 dimensiones clave.',f2t:'Sistema de ingresos recurrentes',f2d:'Calculadora MRR, tracker semanal y simulador de control total.',f3t:'Plan de acción personalizado',f3d:'8 pasos adaptados a tu perfil — empleado, freelancer o dueño de negocio.',f4t:'IA que te dice qué hacer hoy',f4d:'Analiza tu situación real y genera una sola acción concreta para este momento.',f5t:'Registro de gastos e ingresos',f5d:'Control real con la regla 50/30/20 aplicada a tus números.',f6t:'20 lecciones + nuevos módulos',f6d:'Contenido nuevo cada mes. Tu guía crece contigo.',proof:'"Llevaba años ganando bien pero nunca me sobraba nada. Con esta membresía vi por primera vez en qué mes iba a tener control total. Eso cambia todo."',proofAuthor:'— María T., emprendedora · Santo Domingo',priceName:'Membresía Finanzas Controladas',pricePeriod:'por mes',priceCancel:'🛡️ 25 días para cancelar sin costo',includes:['Panel de control financiero completo','Simulador — el mes exacto de tu control total','Registro de gastos e ingresos en tiempo real','Plan de acción personalizado por perfil','Tracker semanal del lunes — MRR real','20 lecciones + glosario financiero','Nuevos módulos cada mes','Comunidad privada de miembros','Recomendación diaria con IA'],cta:'Unirme ahora por $19.99/mes →',ctaSub:'Acceso inmediato · Cancela antes del día 25 sin cargo adicional',gtitle:'25 días para decidir — sin presión',gtext:'Únete hoy. Prueba todo el sistema durante 25 días. Si decides que no es para ti, cancela antes del día 25 y no te cobramos el siguiente mes. Sin formularios, sin excusas, sin preguntas. El riesgo es nuestro. El control es tuyo.',urgLabel:'es lo que cuesta tomar control de tus finanzas este mes — menos que una cena',faqLabel:'Preguntas frecuentes',faqs:[{q:'¿Cómo funciona la membresía?',a:'Pagas $19.99 el día que te unes y obtienes acceso inmediato. Cada mes se renueva automáticamente. Tienes 25 días desde cada cobro para cancelar sin que se genere el siguiente.'},{q:'¿Qué pasa si cancelo?',a:'Cancelas antes del día 25 y no se genera el próximo cargo. Pierdes el acceso al final del mes pagado. Sin penalizaciones.'},{q:'¿Necesito experiencia financiera previa?',a:'No. Si puedes sumar ingresos y restar gastos, puedes usar esto.'},{q:'¿Cómo accedo después de pagar?',a:'Recibes un enlace inmediatamente después del pago. Haces clic y entras directamente desde cualquier dispositivo.'},{q:'¿Funciona para cualquier país?',a:'Sí. El sistema está en dólares pero aplica para cualquier moneda y país.'},{q:'¿Los nuevos módulos tienen costo adicional?',a:'No. Todo lo que se agregue cada mes forma parte de tu membresía activa. Sin sorpresas.'}],finalH:'¿Sigues esperando el momento correcto?',finalSub:'El momento correcto es cuando decides tener control. No mañana.',finalCta:'Tomar el control ahora →',finalSub2:'$19.99/mes · 25 días para cancelar · acceso inmediato',footer:'Membresía Finanzas Controladas · $19.99/mes · Acceso inmediato · 25 días para cancelar sin costo'},
+  en:{eyebrow:'Controlled Finances Membership',h1:'Take control of your money.<br>Activate income that works for you.',sub:'An interactive system with real-time financial control, recurring income, personalized action plan, and AI — all for less than a coffee a day.',tag:'2,500 members already have total control',prob1:"<strong>Most people earn money but don't control it.</strong> They spend before it arrives, don't know how much comes in each month, and never know when they'll stop depending on a single income source.",prob2:"It's not a lack of discipline. It's a lack of system.",pain:["You don't know exactly how much you earn or spend","You work more but don't feel like you're getting ahead","You have no income that arrives even when you're not working","You don't know which month you could have total control"],whatLabel:'What your membership includes',f1t:'Financial control level',f1d:'Real-time indicator that measures your finances across 5 key dimensions.',f2t:'Recurring income system',f2d:'MRR calculator, weekly tracker, and total control simulator.',f3t:'Personalized action plan',f3d:'8 steps tailored to your profile — employee, freelancer, or business owner.',f4t:'AI that tells you what to do today',f4d:'Analyzes your real situation and generates one concrete action for right now.',f5t:'Income & expense tracker',f5d:'Real control with the 50/30/20 rule applied to your actual numbers.',f6t:'20 lessons + new modules',f6d:'New content every month. Your guide grows with you.',proof:"\"I had been earning well for years but never had anything left over. With this membership I saw for the first time exactly which month I'd have total control. That changes everything.\"",proofAuthor:'— María T., entrepreneur · Santo Domingo',priceName:'Controlled Finances Membership',pricePeriod:'per month',priceCancel:'🛡️ 25 days to cancel at no cost',includes:['Complete financial control dashboard','Simulator — the exact month of your total control','Real-time income & expense tracker','Personalized action plan by profile','Monday weekly tracker — real MRR','20 lessons + financial glossary','New modules every month','Private member community','Daily AI recommendation'],cta:'Join now for $19.99/month →',ctaSub:'Immediate access · Cancel before day 25 at no additional charge',gtitle:'25 days to decide — no pressure',gtext:"Join today. Try the full system for 25 days. If you decide it's not for you, cancel before day 25 and we won't charge you the next month. No forms, no excuses, no questions. The risk is ours. The control is yours.",urgLabel:"is what it costs to take control of your finances this month — less than a dinner out",faqLabel:'Frequently asked questions',faqs:[{q:'How does the membership work?',a:"You pay $19.99 the day you join and get immediate access. It renews automatically each month. You have 25 days from each charge to cancel before the next one is generated."},{q:'What happens if I cancel?',a:"Cancel before day 25 and the next charge won't be generated. You lose access at the end of the paid month. No penalties."},{q:'Do I need prior financial experience?',a:"No. If you can add income and subtract expenses, you can use this."},{q:'How do I access it after paying?',a:"You receive a link immediately after payment. Click it and go straight in from any device."},{q:'Does it work for any country?',a:"Yes. The system is in dollars but applies to any currency and country."},{q:'Do new modules cost extra?',a:"No. Everything added each month is part of your active membership. No surprises."}],finalH:'Still waiting for the right moment?',finalSub:'The right moment is when you decide to take control. Not tomorrow.',finalCta:'Take control now →',finalSub2:'$19.99/month · 25 days to cancel · immediate access',footer:'Controlled Finances Membership · $19.99/month · Immediate access · 25 days to cancel at no cost'}
+};
+let lang='es';
+function setLang(l,btn){lang=l;document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');render()}
+function render(){const c=C[lang];document.getElementById('l-eyebrow').textContent=c.eyebrow;document.getElementById('l-h1').innerHTML=c.h1;document.getElementById('l-sub').textContent=c.sub;document.getElementById('l-tag').textContent=c.tag;document.getElementById('l-prob1').innerHTML=c.prob1;document.getElementById('l-prob2').textContent=c.prob2;document.getElementById('l-pain-list').innerHTML=c.pain.map(p=>`<li><span class="pain-x">✗</span>${p}</li>`).join('');document.getElementById('l-what-label').textContent=c.whatLabel;document.getElementById('l-f1t').textContent=c.f1t;document.getElementById('l-f1d').textContent=c.f1d;document.getElementById('l-f2t').textContent=c.f2t;document.getElementById('l-f2d').textContent=c.f2d;document.getElementById('l-f3t').textContent=c.f3t;document.getElementById('l-f3d').textContent=c.f3d;document.getElementById('l-f4t').textContent=c.f4t;document.getElementById('l-f4d').textContent=c.f4d;document.getElementById('l-f5t').textContent=c.f5t;document.getElementById('l-f5d').textContent=c.f5d;document.getElementById('l-f6t').textContent=c.f6t;document.getElementById('l-f6d').textContent=c.f6d;document.getElementById('l-proof').textContent=c.proof;document.getElementById('l-proof-author').textContent=c.proofAuthor;document.getElementById('l-price-name').textContent=c.priceName;document.getElementById('l-price-period').textContent=c.pricePeriod;document.getElementById('l-price-cancel').textContent=c.priceCancel;document.getElementById('l-includes').innerHTML=c.includes.map(i=>`<li><span class="check">✓</span>${i}</li>`).join('');document.getElementById('l-cta').textContent=c.cta;document.getElementById('l-cta-sub').textContent=c.ctaSub;document.getElementById('l-gtitle').textContent=c.gtitle;document.getElementById('l-gtext').textContent=c.gtext;document.getElementById('l-urg-label').textContent=c.urgLabel;document.getElementById('l-faq-label').textContent=c.faqLabel;document.getElementById('faq-container').innerHTML=c.faqs.map((f,i)=>`<div class="faq-item" onclick="toggleFaq(${i})"><div class="faq-q">${f.q}<span class="faq-chevron" id="ch-${i}">▼</span></div><div class="faq-a" id="faq-${i}">${f.a}</div></div>`).join('');document.getElementById('l-final-h').textContent=c.finalH;document.getElementById('l-final-sub').textContent=c.finalSub;document.getElementById('l-final-cta').textContent=c.finalCta;document.getElementById('l-final-sub2').textContent=c.finalSub2;document.getElementById('l-footer').textContent=c.footer}
+function toggleFaq(i){const a=document.getElementById('faq-'+i),ch=document.getElementById('ch-'+i);a.classList.toggle('open');ch.classList.toggle('open')}
+render();
+</script>
+</body>
+</html>
